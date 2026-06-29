@@ -267,8 +267,9 @@ div#Tools div.stygian div.resin_date_start input:nth-child(1){width:3rem;}
 div#Tools div.stygian div.resin_date_end   input:nth-child(1){width:3rem;}
 div#Tools div.stygian input{padding:0.25rem;border:1px solid #888;text-align:center;border-radius:4px;width:2rem;}
 
-div#Tools #current_enemy     div{font-size:16px;font-weight:bold;border-left:6px solid #4324;padding:0.5rem;}
-div#Tools #remaining_enemies div{display:inline-block;border-left:3px solid #4324;padding:2px;margin:2px;}
+/*▼▼▼テンプレート▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼*/
+div.template .current_enemy     div{font-size:16px;font-weight:bold;border-left:6px solid #4324;padding:0.5rem;}
+div.template .remaining_enemies div{display:inline-block;border-left:3px solid #4324;padding:2px;margin:2px;}
 </style></head><body>
 
 <div class="contentslist">
@@ -1058,38 +1059,61 @@ div#Tools #remaining_enemies div{display:inline-block;border-left:3px solid #432
 	</div>
 
 	<div style="margin:3rem auto auto;">
-		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">配信用素材</div>
+		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">配信用素材(近日中にリンクのみに変更する予定です)</div>
 		<div style="width:calc(100vw - 1.5rem);margin:1rem auto;text-align:center;position:relative;left:min((1000px - (100vw - 1.5rem))/2,0px);">
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;">▼ドラフト地方伝説_残りキャラクター情報_縦型</div>
-			<table border="1" class="DLL_streaming" style="width:100%;margin:2rem 0;">
-				<tr class="background-Anemo"  ><td data-dll-characterelement="anemo"  ><div class="DLL_characterlist_anemo"></div>
-				<tr class="background-Geo"    ><td data-dll-characterelement="geo"    ><div class="DLL_characterlist_geo"></div>
-				<tr class="background-Electro"><td data-dll-characterelement="electro"><div class="DLL_characterlist_electro"></div>
-				<tr class="background-Dendro" ><td data-dll-characterelement="dendro" ><div class="DLL_characterlist_dendro"></div>
-				<tr class="background-Hydro"  ><td data-dll-characterelement="hydro"  ><div class="DLL_characterlist_hydro"></div>
-				<tr class="background-Pyro"   ><td data-dll-characterelement="pyro"   ><div class="DLL_characterlist_pyro"></div>
-				<tr class="background-Cryo"   ><td data-dll-characterelement="cryo"   ><div class="DLL_characterlist_cryo"></div>
-			</table>
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;">▼ドラフト地方伝説_残りキャラクター情報_横型</div>
-			<table border="1" class="DLL_streaming" style="width:100%;margin:2rem 0;">
-				<tr><td class="background-Anemo"   data-dll-characterelement="anemo"  ><div class="DLL_characterlist_anemo"></div>
-				    <td class="background-Geo"     data-dll-characterelement="geo"    ><div class="DLL_characterlist_geo"></div>
-				    <td class="background-Electro" data-dll-characterelement="electro"><div class="DLL_characterlist_electro"></div>
-				    <td class="background-Dendro"  data-dll-characterelement="dendro" ><div class="DLL_characterlist_dendro"></div>
-				    <td class="background-Hydro"   data-dll-characterelement="hydro"  ><div class="DLL_characterlist_hydro"></div>
-				    <td class="background-Pyro"    data-dll-characterelement="pyro"   ><div class="DLL_characterlist_pyro"></div>
-				    <td class="background-Cryo"    data-dll-characterelement="cryo"   ><div class="DLL_characterlist_cryo"></div>
-			</table>
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;">▼ドラフト地方伝説_残り地方伝説情報</div>
-			<table border="1" style="width:100%;margin:2rem 0;table-layout:fixed;background:#eee;">
-				<tr><td style="width:30%;"><div style="margin:2px;">▼戦闘中の地方伝説</div><div id="current_enemy"></div>
-				    <td style="width:70%;"><div id="remaining_enemies"></div>
-			</table>
+			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_character_vartical">▼ドラフト地方伝説_残りキャラクター情報_縦型</a></div>
+			<div class="template streaming_DLL_character_vartical"></div>
+			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_character_horizontal">▼ドラフト地方伝説_残りキャラクター情報_横型</a></div>
+			<div class="template streaming_DLL_character_horizontal"></div>
+			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_locallegend_vartical">▼ドラフト地方伝説_残り地方伝説情報_縦型</a></div>
+			<div class="template streaming_DLL_locallegend_vartical"></div>
+			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_locallegend_horizontal">▼ドラフト地方伝説_残り地方伝説情報_横型</a></div>
+			<div class="template streaming_DLL_locallegend_horizontal"></div>
 		</div>
 	</div>
 </div>
 
+<div id="streaming_DLL_character_vartical"     class="content template streaming_DLL_character_vartical"     style="max-width:9999px;"></div>
+<div id="streaming_DLL_character_horizontal"   class="content template streaming_DLL_character_horizontal"   style="max-width:9999px;"></div>
+<div id="streaming_DLL_locallegend_vartical"   class="content template streaming_DLL_locallegend_vartical"   style="max-width:9999px;"></div>
+<div id="streaming_DLL_locallegend_horizontal" class="content template streaming_DLL_locallegend_horizontal" style="max-width:9999px;"></div>
+
 <hr style="margin-top:10rem;">
+
+<template id="streaming_DLL_character_vartical">
+	<table border="1" class="DLL_streaming" style="width:100%;margin:2rem 0;">
+		<tr class="background-Anemo"  ><td data-dll-characterelement="anemo"  ><div class="DLL_characterlist_anemo"></div>
+		<tr class="background-Geo"    ><td data-dll-characterelement="geo"    ><div class="DLL_characterlist_geo"></div>
+		<tr class="background-Electro"><td data-dll-characterelement="electro"><div class="DLL_characterlist_electro"></div>
+		<tr class="background-Dendro" ><td data-dll-characterelement="dendro" ><div class="DLL_characterlist_dendro"></div>
+		<tr class="background-Hydro"  ><td data-dll-characterelement="hydro"  ><div class="DLL_characterlist_hydro"></div>
+		<tr class="background-Pyro"   ><td data-dll-characterelement="pyro"   ><div class="DLL_characterlist_pyro"></div>
+		<tr class="background-Cryo"   ><td data-dll-characterelement="cryo"   ><div class="DLL_characterlist_cryo"></div>
+	</table>
+</template>
+<template id="streaming_DLL_character_horizontal">
+	<table border="1" class="DLL_streaming" style="width:100%;margin:2rem 0;">
+		<tr><td class="background-Anemo"   data-dll-characterelement="anemo"  ><div class="DLL_characterlist_anemo"></div>
+		    <td class="background-Geo"     data-dll-characterelement="geo"    ><div class="DLL_characterlist_geo"></div>
+		    <td class="background-Electro" data-dll-characterelement="electro"><div class="DLL_characterlist_electro"></div>
+		    <td class="background-Dendro"  data-dll-characterelement="dendro" ><div class="DLL_characterlist_dendro"></div>
+		    <td class="background-Hydro"   data-dll-characterelement="hydro"  ><div class="DLL_characterlist_hydro"></div>
+		    <td class="background-Pyro"    data-dll-characterelement="pyro"   ><div class="DLL_characterlist_pyro"></div>
+		    <td class="background-Cryo"    data-dll-characterelement="cryo"   ><div class="DLL_characterlist_cryo"></div>
+	</table>
+</template>
+<template id="streaming_DLL_locallegend_vartical">
+	<table border="1" style="width:100%;margin:2rem 0;table-layout:fixed;background:#eee;">
+		<tr><td><div style="margin:2px;">▼戦闘中の地方伝説</div><div class="current_enemy"></div>
+		<tr><td><div class="remaining_enemies"></div>
+	</table>
+</template>
+<template id="streaming_DLL_locallegend_horizontal">
+	<table border="1" style="width:100%;margin:2rem 0;table-layout:fixed;background:#eee;">
+		<tr><td style="width:30%;"><div style="margin:2px;">▼戦闘中の地方伝説</div><div class="current_enemy"></div>
+		    <td style="width:70%;"><div class="remaining_enemies"></div>
+	</table>
+</template>
 
 <script type="module">
 // #####################################################################################################################################################################################################
@@ -2942,7 +2966,7 @@ function DraftLocalLegend_importStatus() {
     const characterId = String(index + 1).padStart(3, '0');
 
     // ▼HTMLに反映
-    document.querySelectorAll(`label[data-dll-character="${characterId}"]`).forEach(label => {
+    document.querySelectorAll(`label[data-dll-character_id="${characterId}"]`).forEach(label => {
       label.dataset.dllStatus = statusValue;
     });
 
@@ -2961,12 +2985,12 @@ document.getElementById('DraftLocalLegend_importStatus')
 
 
 function DraftLocalLegend_exportStatus() {
-  const labels = [...document.querySelectorAll('label[data-dll-character]')];
+  const labels = [...document.querySelectorAll('label[data-dll-character_id]')];
 
   // ▼character番号でグループ化(重複排除)
   const map = new Map();
   labels.forEach(label => {
-    const char = label.dataset.dllCharacter;
+    const char = label.dataset.dllCharacter_id;
     const status = label.dataset.dllStatus;
     if (!map.has(char)) map.set(char, status);
   });
@@ -4633,88 +4657,83 @@ zibai_toggle.addEventListener("change", (e) => {
 
 // ▼今戦っている地方伝説
 function extractDisplayDiv(html) {
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = html;
 
-    const target = wrapper.querySelector("li > div > div:last-of-type");
+  const target = wrapper.querySelector("li > div > div:last-of-type");
+  if (!target) {return"";}
 
-    if (!target) {
-        return "";
-    }
+  const clone = target.cloneNode(true);
+  clone.querySelectorAll("span").forEach(span => span.remove());
 
-    const clone = target.cloneNode(true);
-
-    clone.querySelectorAll("span").forEach(span => span.remove());
-
-    return clone.outerHTML;
+  return clone.outerHTML;
 }
 
+const defaultOrder = '<li><div><div class="background-none">準備中<span></span></div></div></li>';
+
 onValue(
-    ref(database, "DraftLocalLegend/locallegend_order"),
-    (snapshot) => {
-        const data = snapshot.val();
+  ref(database, "DraftLocalLegend/locallegend_order"),
+  (snapshot) => {
+    const data = snapshot.val();
 
-        let maxIndex = -1;
-        let currentOrder = '<li><div><div class="background-none">準備中<span></span></div></div></li>';
+    let maxIndex = -1;
+    let currentOrder = defaultOrder;
 
-        if (data) {
-            Object.keys(data).forEach((key) => {
-                const item = data[key];
+    if (data) {
+      for (const [key, item] of Object.entries(data)) {
+        const index = Number(key);
 
-                if (
-                    item &&
-                    item.mask === "revealed" &&
-                    !isNaN(Number(key)) &&
-                    Number(key) > maxIndex
-                ) {
-                    maxIndex = Number(key);
-                    currentOrder = item.order ?? currentOrder;
-                }
-            });
+        if (
+          !Number.isNaN(index) &&
+          item?.mask === "revealed" &&
+          index > maxIndex
+        ) {
+          maxIndex = index;
+          currentOrder = item.order ?? defaultOrder;
         }
-
-        document.getElementById("current_enemy").innerHTML =
-            extractDisplayDiv(currentOrder);
+      }
     }
+
+    const html = extractDisplayDiv(currentOrder);
+
+    document.querySelectorAll(".current_enemy").forEach(element => {
+      element.innerHTML = html;
+    });
+  }
 );
 
 // ▼残り地方伝説一覧
 function updateRemainingEnemies() {
-    const source = document.getElementById("DraftLocalLegend_MaskedList");
-    const target = document.getElementById("remaining_enemies");
+  const source = document.getElementById("DraftLocalLegend_MaskedList");
+  const target = document.getElementById("remaining_enemies");
 
-    if (!source || !target) {
-        return;
-    }
+  if (!source || !target) return;
 
-    target.innerHTML = "";
+  const fragment = document.createDocumentFragment();
 
-    source.querySelectorAll(":scope > div").forEach((div) => {
-        const clone = div.cloneNode(true);
+  for (const div of source.querySelectorAll(":scope > div")) {
+    const clone = div.cloneNode(true);
 
-        clone.querySelectorAll("span").forEach((span) => {
-            span.remove();
-        });
+    clone.querySelectorAll("span").forEach(span => span.remove());
 
-        target.appendChild(clone);
-    });
+    fragment.appendChild(clone);
+  }
+
+  target.replaceChildren(fragment);
 }
 
 updateRemainingEnemies();
 
-const observer = new MutationObserver(() => {
-    updateRemainingEnemies();
-});
+const observer = new MutationObserver(updateRemainingEnemies);
 
-observer.observe(
-    document.getElementById("DraftLocalLegend_MaskedList"),
-    {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true
-    }
-);
+document.querySelectorAll(".DraftLocalLegend_MaskedList").forEach(element => {
+  observer.observe(element, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+    attributes: true
+  });
+});
 // #######Tools_配信用ドラフト地方伝説残り地方伝説情報##################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######全選択／全解除ボタン用プログラム##############################################################################################################################################################
@@ -4845,6 +4864,23 @@ document.addEventListener('click', () => {
 
 // #######ヘルプ表示プログラム##########################################################################################################################################################################
 // #####################################################################################################################################################################################################
+// #######templateの複製################################################################################################################################################################################
+
+const template_templateElements = document.querySelectorAll("template[id]");
+
+template_templateElements.forEach((template_templateElement) => {
+  const template_templateName = template_templateElement.id;
+  const template_targetElements = document.querySelectorAll(`div.${CSS.escape(template_templateName)}`);
+
+  template_targetElements.forEach((template_targetElement) => {
+    template_targetElement.appendChild(
+      template_templateElement.content.cloneNode(true)
+    );
+  });
+});
+
+// #######templateの複製################################################################################################################################################################################
+// #####################################################################################################################################################################################################
 // #######スプレッドシートのデータをインポートする######################################################################################################################################################
 
 try {
@@ -4932,9 +4968,17 @@ try {
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
 
+	<div class="version">v2.1.0<span>2026/06/29</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】セーブデータのエクスポート機能が動作していない問題を修正しました</p>
+		<p>【便利ツール】すべての配信用素材をそれ単体で開けるようにしました</p>
+		<p>【便利ツール】配信用素材に「ドラフト地方伝説_残り地方伝説情報_縦型」を追加しました</p>
+	</div>
+
 	<div class="version">v2.0.0<span>2026/06/12</span></div>
 	<div class="details">
 		<p>トワリンマルチの会データベースと連携し、各情報を参照する形式に変更しました</p>
+		<p>データベースとの連携に合わせて、本ページのURLを変更しました</p>
 		<p>【地図無しレース】移動に関する補足説明や各キャラクター・武器の移動性能についての表記を削除し、必要な情報をルール補足に移動しました。</p>
 		<p>【ドラフト地方伝説】復活コスト確認用カウンターを削除しました</p>
 		<p>【ドラフト地方伝説】コスト抽選機の初期値を5に変更しました</p>
