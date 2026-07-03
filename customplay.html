@@ -4661,7 +4661,9 @@ function extractDisplayDiv(html) {
   wrapper.innerHTML = html;
 
   const target = wrapper.querySelector("li > div > div:last-of-type");
-  if (!target) {return"";}
+  if (!target) {
+    return "";
+  }
 
   const clone = target.cloneNode(true);
   clone.querySelectorAll("span").forEach(span => span.remove());
@@ -4705,9 +4707,11 @@ onValue(
 // ▼残り地方伝説一覧
 function updateRemainingEnemies() {
   const source = document.getElementById("DraftLocalLegend_MaskedList");
-  const target = document.getElementById("remaining_enemies");
+  const targets = document.getElementsByClassName("remaining_enemies");
 
-  if (!source || !target) return;
+  if (!source || targets.length === 0) {
+    return;
+  }
 
   const fragment = document.createDocumentFragment();
 
@@ -4719,21 +4723,25 @@ function updateRemainingEnemies() {
     fragment.appendChild(clone);
   }
 
-  target.replaceChildren(fragment);
+  for (const target of targets) {
+    target.replaceChildren(fragment.cloneNode(true));
+  }
 }
 
 updateRemainingEnemies();
 
 const observer = new MutationObserver(updateRemainingEnemies);
 
-document.querySelectorAll(".DraftLocalLegend_MaskedList").forEach(element => {
-  observer.observe(element, {
+const maskedList = document.getElementById("DraftLocalLegend_MaskedList");
+
+if (maskedList) {
+  observer.observe(maskedList, {
     childList: true,
     subtree: true,
     characterData: true,
     attributes: true
   });
-});
+}
 // #######Tools_配信用ドラフト地方伝説残り地方伝説情報##################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######全選択／全解除ボタン用プログラム##############################################################################################################################################################
@@ -4967,6 +4975,11 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.1.1<span>2026/07/03</span></div>
+	<div class="details">
+		<p>【便利ツール】配信用素材の一部が正常に動作していない問題を修正しました</p>
+	</div>
 
 	<div class="version">v2.1.0<span>2026/06/29</span></div>
 	<div class="details">
