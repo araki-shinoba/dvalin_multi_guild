@@ -1028,18 +1028,18 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 		<div style="margin:1rem;">
 			<div id="stygian_weekBoss">
 				幽境当週の週ボス：
-				<label><input name="stygian_weekBoss_rb" type="radio" class="checkbox" value="true"         ><span>未終了</span></label>
-				<label><input name="stygian_weekBoss_rb" type="radio" class="checkbox" value="false" checked><span>終了  </span></label>
+				<label><input name="stygian_weekBoss_rb" type="radio" data-css="none" value="true"         ><span>未終了</span></label>
+				<label><input name="stygian_weekBoss_rb" type="radio" data-css="none" value="false" checked><span>終了  </span></label>
 			</div>
 
 			<div id="stygian_resin">
 				濃縮樹脂の数：
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="0"        ><span>0</span></label>
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="1"        ><span>1</span></label>
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="2"        ><span>2</span></label>
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="3"        ><span>3</span></label>
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="4"        ><span>4</span></label>
-				<label><input name="stygian_resin_rb" type="radio" class="checkbox" value="5" checked><span>5</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="0"        ><span>0</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="1"        ><span>1</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="2"        ><span>2</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="3"        ><span>3</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="4"        ><span>4</span></label>
+				<label><input name="stygian_resin_rb" type="radio" data-css="none" value="5" checked><span>5</span></label>
 			</div>
 		</div>
 	</div>
@@ -2157,7 +2157,9 @@ export async function DraftLocalLegend_maskrunLottery() {
       div.classList.remove('masked');
       div.classList.add('revealed');
 
-      const result = buildSaveData(characterStatusMap);
+      const statusSnap = await get(ref(database, "DraftLocalLegend/character_statuses"));
+      const currentStatusMap = statusSnap.val() ?? {};
+      const result = buildSaveData(currentStatusMap);
 
       // ▼DOM更新
       const li = div.closest("li");
@@ -4975,6 +4977,12 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.1.2<span>2026/07/22</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】地方伝説の抽選結果を表示する際に併せて表示される進捗状況の表示に遅延がある問題を修正しました</p>
+		<p>【便利ツール】幽境の激戦用樹脂消費計算機の各ラジオボタンの選択状況が正しく描画されない問題を修正しました</p>
+	</div>
 
 	<div class="version">v2.1.1<span>2026/07/03</span></div>
 	<div class="details">
