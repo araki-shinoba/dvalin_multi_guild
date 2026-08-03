@@ -1058,17 +1058,32 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 		</div>
 	</div>
 
-	<div style="margin:3rem auto auto;">
-		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">配信用素材(近日中にリンクのみに変更する予定です)</div>
-		<div style="width:calc(100vw - 1.5rem);margin:1rem auto;text-align:center;position:relative;left:min((1000px - (100vw - 1.5rem))/2,0px);">
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_character_vartical">▼ドラフト地方伝説_残りキャラクター情報_縦型</a></div>
-			<div class="template streaming_DLL_character_vartical"></div>
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_character_horizontal">▼ドラフト地方伝説_残りキャラクター情報_横型</a></div>
-			<div class="template streaming_DLL_character_horizontal"></div>
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_locallegend_vartical">▼ドラフト地方伝説_残り地方伝説情報_縦型</a></div>
-			<div class="template streaming_DLL_locallegend_vartical"></div>
-			<div style="padding:0.5rem;text-align:center;margin:2rem 0;"><a href="#streaming_DLL_locallegend_horizontal">▼ドラフト地方伝説_残り地方伝説情報_横型</a></div>
-			<div class="template streaming_DLL_locallegend_horizontal"></div>
+	<div style="max-width:400px;margin:3rem auto auto;">
+		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">配信用素材</div>
+		<div style="margin:0.5rem;text-align:center;line-height:150%;">
+			<a href="#streaming_DLL_character_vartical">ドラフト地方伝説_残りキャラクター情報_縦型</a><br>
+			<a href="#streaming_DLL_character_horizontal">ドラフト地方伝説_残りキャラクター情報_横型</a><br>
+			<a href="#streaming_DLL_locallegend_vartical">ドラフト地方伝説_残り地方伝説情報_縦型</a><br>
+			<a href="#streaming_DLL_locallegend_horizontal">ドラフト地方伝説_残り地方伝説情報_横型</a><br>
+		</div>
+	</div>
+
+	<div style="max-width:400px;margin:3rem auto auto;">
+		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">バックアップ復元</div>
+		<div style="margin:0.5rem;text-align:center;">
+			<select name="recovery_date" id="recovery_date" style="width:380px;margin:1rem auto;">
+				<option value="">復元する日時を選んでください</option>
+			</select>
+			<select name="recovery_category" id="recovery_category" style="width:380px;margin:1rem auto;">
+				<option value="">復元するデータを選んでください</option>
+				<option value="recovery_DLL">ドラフト地方伝説 / マイリスト</option>
+				<option value="recovery_ARBB">完全ランダムボスバトル / プレイヤー情報</option>
+			</select>
+			<select name="recovery_player" id="recovery_player" style="width:380px;margin:1rem auto;">
+				<option value="">復元するプレイヤーを選んでください</option>
+			</select>
+			<input type="button" value="復元" id="recovery_button" style="width:80px;margin:1rem;padding:1rem;font-weight:bold;">
+
 		</div>
 	</div>
 </div>
@@ -1136,6 +1151,257 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // #######Firebaseの初期設定(編集不可)##################################################################################################################################################################
+// #####################################################################################################################################################################################################
+// #######Firebaseのバックアップを復元する##############################################################################################################################################################
+
+const recoveryDateSelect = document.getElementById("recovery_date");
+const recoveryCategorySelect = document.getElementById("recovery_category");
+const recoveryPlayerSelect = document.getElementById("recovery_player");
+const recoveryButton = document.getElementById("recovery_button");
+
+// ▼初期状態
+recoveryCategorySelect.style.display = "none";
+recoveryPlayerSelect.style.display = "none";
+
+// ▼categoryとFirebaseパス対応
+const recoveryCategoryMap = {
+  recovery_DLL: "DraftLocalLegend/users",
+  recovery_ARBB: "AllRandomBossBattle/users"
+};
+
+// ▼YYYYMMDDhhmmssSSS → 表示形式へ変換
+function formatRecoveryDate(value) {
+  return (
+    value.substring(0,4) + "年" +
+    value.substring(4,6) + "月" +
+    value.substring(6,8) + "日 " +
+    value.substring(8,10) + "時" +
+    value.substring(10,12) + "分" +
+    value.substring(12,14) + "秒" +
+    value.substring(14,17)
+  );
+}
+
+// ▼バックアップ一覧取得
+async function loadRecoveryDates(){
+  const backupRef = ref(database, "backup");
+  const snapshot = await get(backupRef);
+  if(!snapshot.exists()){return;}
+
+  const backupData = snapshot.val();
+  const dates = [];
+
+  for(const key in backupData){
+    // ▼日時形式のみ対象
+    if(/^\d{17}$/.test(key)){
+      const status = backupData[key]?._status;
+      if(status === "success"){dates.push(key);}
+    }
+  }
+
+  // ▼日時を新しい順に並び替える
+  dates.sort((a,b)=>{
+    if(a > b) return -1;
+    if(a < b) return 1;
+    return 0;
+  });
+
+  dates.forEach(date=>{
+    const option = document.createElement("option");
+    option.value = date;
+    option.textContent = formatRecoveryDate(date);
+    recoveryDateSelect.appendChild(option);
+  });
+}
+
+loadRecoveryDates();
+
+// ▼日時選択
+recoveryDateSelect.addEventListener("change",()=>{
+  recoveryCategorySelect.style.display = recoveryDateSelect.value ? "" : "none";
+  recoveryPlayerSelect.style.display = "none";
+  recoveryPlayerSelect.innerHTML = `<option value="">復元するプレイヤーを選んでください</option>`;
+});
+
+// ▼category選択
+recoveryCategorySelect.addEventListener("change",async()=>{
+  recoveryPlayerSelect.innerHTML = `<option value="">復元するプレイヤーを選んでください</option>`;
+  const backupDate = recoveryDateSelect.value;
+  const category = recoveryCategorySelect.value;
+  if(!backupDate || !category){
+    recoveryPlayerSelect.style.display="none";
+    return;
+  }
+
+  const path = `backup/${backupDate}/${recoveryCategoryMap[category]}`;
+  const snapshot = await get(ref(database,path));
+  if(!snapshot.exists()){
+    recoveryPlayerSelect.style.display="none";
+    return;
+  }
+
+  const users = snapshot.val();
+  Object.keys(users).sort().forEach(player=>{
+    const option = document.createElement("option");
+    option.value = player;
+    option.textContent = player;
+    recoveryPlayerSelect.appendChild(option);
+  });
+  recoveryPlayerSelect.style.display = "";
+});
+
+// ▼復元前バックアップ
+async function createRecoveryBackup(){
+  const backupId = getJSTTimestampString();
+  const backupPath = `backup/${backupId}`;
+  try{
+    await set(ref(database,`${backupPath}/_status`),"running");
+    const dllSnapshot = await get(ref(database,"DraftLocalLegend/users"));
+    const arbbSnapshot = await get(ref(database,"AllRandomBossBattle/users"));
+
+    const backupData = {
+      DraftLocalLegend   :{users: dllSnapshot.exists() ?  dllSnapshot.val() : {}},
+      AllRandomBossBattle:{users:arbbSnapshot.exists() ? arbbSnapshot.val() : {}},
+      _status:"success"
+    };
+
+    // ▼バックアップ保存
+    await set(ref(database,backupPath),backupData);
+    // ▼成功時のみ120時間カウントを更新
+    await set(ref(database,"backup/_lastbackup"),Date.now());
+    return true;
+  }catch(error){
+    console.error("復元前バックアップ失敗",error);
+    try{await set(ref(database,`${backupPath}/_status`),"error");
+    }catch(e){}
+    return false;
+  }
+}
+
+// ▼復元処理
+async function executeRecovery(){
+  const date = recoveryDateSelect.value;
+  const category = recoveryCategorySelect.value;
+  const player = recoveryPlayerSelect.value;
+
+  if(!date || !category || !player){
+    alert("復元対象を選択してください");
+    return;
+  }
+
+  const confirmResult =confirm(`復元を実行しますか？`);
+  if(!confirmResult){return;}
+
+  // ▼復元前バックアップ
+  const backupResult = await createRecoveryBackup();
+  if(!backupResult){
+    alert("復元前バックアップに失敗したため復元を中止しました");
+    return;
+  }
+
+  const categoryPath = recoveryCategoryMap[category];
+  const sourcePath = `backup/${date}/${categoryPath}/${player}`;
+  const restorePath = `${categoryPath}/${player}`;
+
+  try{const snapshot = await get(ref(database,sourcePath));
+    if(!snapshot.exists()){alert("復元の元となるデータが存在しません");
+      return;
+    }
+
+    const restoreData = snapshot.val();
+
+    // ▼完全置換
+    await remove(ref(database,restorePath));
+    await set(ref(database,restorePath),restoreData);
+    alert("復元が完了しました");
+  }catch(error){
+    console.error("復元失敗",error);
+    alert("復元中にエラーが発生しました");
+  }
+}
+
+// ▼復元ボタン
+recoveryButton.addEventListener("click",executeRecovery);
+
+// #######Firebaseのバックアップを復元する##############################################################################################################################################################
+// #####################################################################################################################################################################################################
+// #######Firebaseのバックアップを保存する##############################################################################################################################################################
+
+// ▼JST基準 YYYYMMDDhhmmssSSS を生成
+function getJSTTimestampString() {
+  const now = new Date();
+
+  const jst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+
+  const year = jst.getUTCFullYear();
+  const month = String(jst.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(jst.getUTCDate()).padStart(2, "0");
+  const hour = String(jst.getUTCHours()).padStart(2, "0");
+  const minute = String(jst.getUTCMinutes()).padStart(2, "0");
+  const second = String(jst.getUTCSeconds()).padStart(2, "0");
+  const milli = String(jst.getUTCMilliseconds()).padStart(3, "0");
+
+  return `${year}${month}${day}${hour}${minute}${second}${milli}`;
+}
+
+// ▼バックアップ実行判定
+async function executeBackupIfNeeded() {
+  const lastBackupRef = ref(database,"backup/_lastbackup");
+  let lastBackup = null;
+  try {
+    const snapshot = await get(lastBackupRef);
+    if(snapshot.exists()){lastBackup = snapshot.val();}
+  }catch(error){
+    console.error("lastbackup取得失敗",error);
+    return;
+  }
+
+  const now = Date.now();
+
+  // ▼前回バックアップから120時間以内なら終了
+  if(
+    lastBackup !== null &&
+    now - lastBackup < 120 * 60 * 60 * 1000
+  ){return;}
+  await createBackup();
+} // ◆テキストエディタ処理◆ >
+
+// ▼バックアップ作成本体
+async function createBackup(){
+  const backupId = getJSTTimestampString();
+  const backupRef = ref(database,`backup/${backupId}`);
+  const statusRef = ref(database,`backup/${backupId}/_status`);
+
+  try {
+    // ▼状態をrunningへ
+    await set(statusRef,"running");
+    // ▼必要な2種類のデータのみ取得
+    const  dllSnapshot = await get(ref(database,"DraftLocalLegend/users"));
+    const arbbSnapshot = await get(ref(database,"AllRandomBossBattle/users"));
+    const backupData = {
+      DraftLocalLegend   :{users: dllSnapshot.exists() ?  dllSnapshot.val() : {}},
+      AllRandomBossBattle:{users:arbbSnapshot.exists() ? arbbSnapshot.val() : {}},
+      _status:"success"
+    };
+
+    // ▼バックアップ保存
+    await set(backupRef, backupData);
+    // ▼最後に成功日時を更新
+    await set(ref(database,"backup/_lastbackup"),Date.now());
+  }catch(error){
+    console.error("バックアップ失敗",error);
+    // ▼可能ならerror状態へ
+    try {await set(statusRef,"error");
+    }catch(statusError){
+      console.error("status更新失敗",statusError);
+    }
+  }
+}
+
+// ▼ページアクセス時に実行
+executeBackupIfNeeded();
+
+// #######Firebaseのバックアップを保存する##############################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######characterlistをもとにcharacterlist_[element]とDLL_characterlist_[element]をつくる#############################################################################################################
 
@@ -4977,6 +5243,12 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.2.0<span>2026/08/03</span></div>
+	<div class="details">
+		<p>【便利ツール】配信用素材の表示をリンク先でのみ表示する形に移行しました</p>
+		<p>【便利ツール】バックアップ復元機能を追加しました</p>
+	</div>
 
 	<div class="version">v2.1.2<span>2026/07/22</span></div>
 	<div class="details">
