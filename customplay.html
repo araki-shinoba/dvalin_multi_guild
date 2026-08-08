@@ -3258,16 +3258,27 @@ function DraftLocalLegend_exportStatus() {
   // ▼character番号でグループ化(重複排除)
   const map = new Map();
   labels.forEach(label => {
-    const char = label.dataset.dllCharacter_id;
+    const char = Number(label.dataset.dllCharacter_id);
     const status = label.dataset.dllStatus;
     if (!map.has(char)) map.set(char, status);
   });
 
-  // ▼character順に並べて文字列を生成
-  const result = [...map.entries()]
-    .sort((a, b) => Number(a[0]) - Number(b[0]))
-    .map(([_, status]) => status)
-    .join('');
+  // ▼character順に並べて文字列を生成、欠番にはXを挿入
+  const characters = [...map.keys()].sort((a, b) => a - b);
+  let result = '';
+
+  if (characters.length > 0) {
+    const minCharacter = characters[0];
+    const maxCharacter = characters[characters.length - 1];
+
+    for (let character = minCharacter; character <= maxCharacter; character++) {
+      if (map.has(character)) {
+        result += map.get(character);
+      } else {
+        result += 'X';
+      }
+    }
+  }
 
   const output = document.getElementById('DraftLocalLegend_exportText');
   output.value = result;
@@ -5243,6 +5254,11 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.2.1<span>2026/08/08</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】セーブデータのエクスポート機能がキャラクターIDの欠番に対応していない問題を修正しました</p>
+	</div>
 
 	<div class="version">v2.2.0<span>2026/08/03</span></div>
 	<div class="details">
