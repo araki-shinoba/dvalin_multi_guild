@@ -398,6 +398,12 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 	</div>
 
 	<div id="DraftLocalLegend_root"></div>
+	<div style="text-align:center;background:#eee;border:1px #aaa;border-style:none solid solid solid;padding:0.5rem;">
+		抽選数：<input type="number" id="DraftLocalLegend_enemycount" style="width:60px;" value="20" step="1"><br>
+		<label><input type="checkbox" id="DraftLocalLegend_createmaskedlist" data-css="none"><span>残りの地方伝説を表示する(リアルタイム反映)</span></label><br>
+		<br>
+		※指定した地方伝説の数を超過する値を入力した場合、超過した分は無視されすべての地方伝説が抽選対象に含まれます
+	</div>
 
 	<div style="text-align:center;">
 		<input type="button" value="決定" id="DraftLocalLegend_lottery" style="width:80px;margin:1rem;padding:1rem;font-weight:bold;">
@@ -2301,6 +2307,31 @@ function DraftLocalLegend_renderEnemyLists(DraftLocalLegend_root) {
 
 // #######DraftLocalLegend_地方伝説リスト出力###########################################################################################################################################################
 // #####################################################################################################################################################################################################
+// #######残り地方伝説の表示・非表示checkbox状態の共有##################################################################################################################################################
+
+const createMaskedListCheckbox = document.getElementById('DraftLocalLegend_createmaskedlist');
+
+const createMaskedListRef = ref(database,'DraftLocalLegend/locallegend_order/createmaskedlist');
+
+if (createMaskedListCheckbox) {
+  // ▼Firebase→DOM
+  onValue(createMaskedListRef, (snapshot) => {
+    const firebaseValue = snapshot.val();
+
+    // ▼Firebaseに値が存在する場合のみDOMへ反映
+    if (typeof firebaseValue === 'boolean') {
+      createMaskedListCheckbox.checked = firebaseValue;
+    }
+  });
+
+  // ▼DOM→Firebase
+  createMaskedListCheckbox.addEventListener('change', () => {
+    set(createMaskedListRef, createMaskedListCheckbox.checked);
+  });
+}
+
+// #######残り地方伝説の表示・非表示checkbox状態の共有##################################################################################################################################################
+// #####################################################################################################################################################################################################
 // #######DraftLocalLegend_地方伝説抽選#################################################################################################################################################################
 
 let characterStatusMap = {};
@@ -2328,8 +2359,20 @@ export async function DraftLocalLegend_runLottery() {
   // ▼チェックされている地方伝説を取得
   const selected = [...document.querySelectorAll('#DraftLocalLegend_root input[type="checkbox"]:checked')];
 
+  // ▼地方伝説の抽選数を取得
+  const enemyCountInput = document.getElementById("DraftLocalLegend_enemycount");
+  const enemyCount = Number(enemyCountInput?.value);
+
+  // ▼チェックされている地方伝説の中から抽選対象を決定
+  // ▼入力数がチェック数以上の場合は、チェック済みをすべて対象にする
+  const selectionCount = Math.min(enemyCount, selected.length);
+
+  // ▼重複なしでランダムに選択
+  const selectedForLottery = DraftLocalLegend_shuffleArray(selected)
+    .slice(0, selectionCount);
+
   // ▼liを生成
-  const htmlList = selected.map(input => {
+  const htmlList = selectedForLottery.map(input => {
 
     const general_id = input.dataset.general_id || '';
     const region_en = input.dataset.region_en || '';
@@ -2365,13 +2408,29 @@ export async function DraftLocalLegend_runLottery() {
 }
 
 function buildSaveData(statusMap) {
-
   const keys = Object.keys(statusMap)
     .sort((a, b) => Number(a) - Number(b));
 
-  return keys
-    .map(k => statusMap[k])
-    .join("");
+  if (keys.length === 0) {return "";}
+  let result = "";
+
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+
+    // ▼ 前の番号から飛んでいる場合、欠番1つにつきXを挿入
+    if (i > 0) {
+      const prevKey = Number(keys[i - 1]);
+      const currentKey = Number(key);
+
+      for (let missing = prevKey + 1; missing < currentKey; missing++) {result += "X";}
+    }
+
+    // ▼ 現在のcharacter番号のstatusを追加
+    // ▼ keyは "001" のような文字列のまま使用する
+    result += statusMap[key];
+  }
+
+  return result;
 }
 
 // ▼mask状態の監視とクリックハンドラ設定
@@ -2444,7 +2503,19 @@ export async function DraftLocalLegend_maskrunLottery() {
     };
   });
 
-  await DraftLocalLegend_renderMaskedList(maskedNames);
+  const createMaskedList = document.getElementById(
+    "DraftLocalLegend_createmaskedlist"
+  );
+
+  const maskedListContainer = document.getElementById(
+    "DraftLocalLegend_MaskedList"
+  );
+
+  if (createMaskedList?.checked) {
+    await DraftLocalLegend_renderMaskedList(maskedNames);
+  } else if (maskedListContainer) {
+    maskedListContainer.innerHTML = "";
+  }
 }
 
 // ▼MaskedList描画(残り地方伝説一覧)
@@ -5021,6 +5092,7 @@ if (maskedList) {
     attributes: true
   });
 }
+
 // #######Tools_配信用ドラフト地方伝説残り地方伝説情報##################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######全選択／全解除ボタン用プログラム##############################################################################################################################################################
@@ -5254,6 +5326,13 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.3.0<span>2026/08/09</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】増加する地方伝説への対応として、地方伝説の抽選数を指定できるように変更しました</p>
+		<p>【ドラフト地方伝説】残りの地方伝説一覧の表示・非表示機能を追加しました</p>
+		<p>【ドラフト地方伝説】次に戦う地方伝説と併せて表示されるセーブデータの進捗が正常に反映されない問題を修正しました</p>
+	</div>
 
 	<div class="version">v2.2.1<span>2026/08/08</span></div>
 	<div class="details">
