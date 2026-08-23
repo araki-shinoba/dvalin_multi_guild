@@ -400,7 +400,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 
 	<div id="DraftLocalLegend_root"></div>
 	<div style="text-align:center;background:#eee;border:1px #aaa;border-style:none solid solid solid;padding:0.5rem;">
-		抽選数：<input type="number" id="DraftLocalLegend_enemycount" style="width:60px;" value="20" step="1"><br>
+		抽選数：<input type="number" id="DraftLocalLegend_enemycount" style="width:60px;" value="99" step="1"><br>
 		<label><input type="checkbox" id="DraftLocalLegend_createmaskedlist" data-css="none"><span>残りの地方伝説を表示する(リアルタイム反映)</span></label><br>
 		<br>
 		※指定した地方伝説の数を超過する値を入力した場合、超過した分は無視されすべての地方伝説が抽選対象に含まれます
@@ -2151,15 +2151,6 @@ function DraftLocalLegend_renderRoot(DLL_customplaylist) {
   const createPC = () => {
     const div = document.createElement("div");
     div.className = "DraftLocalLegend_enemylist pc";
-
-    div.innerHTML = `
-      <div><span class="checkbox-header">モンド<br>空の神殿</span></div>
-      <div><span class="checkbox-header">璃月</span></div>
-      <div><span class="checkbox-header">フォンテーヌ<br>往日の海</span></div>
-      <div><span class="checkbox-header">ナタ<br>古の聖山</span></div>
-      <div><span class="checkbox-header">ナド・クライ</span></div>
-    `;
-
     return div;
   };
 
@@ -4292,17 +4283,6 @@ function AllRandomBossBattle_renderRoot(ARB_customplaylist) {
   const createPC = () => {
     const div = document.createElement("div");
     div.className = "AllRandomBossBattle_enemylist pc";
-
-    div.innerHTML = `
-      <div><span class="checkbox-header">モンド</span></div>
-      <div><span class="checkbox-header">璃月<br>層岩巨淵・地下鉱区</span></div>
-      <div><span class="checkbox-header">稲妻<br>淵下宮</span></div>
-      <div><span class="checkbox-header">スメール</span></div>
-      <div><span class="checkbox-header">フォンテーヌ</span></div>
-      <div><span class="checkbox-header">ナタ</span></div>
-      <div><span class="checkbox-header">ナド・クライ</span></div>
-    `;
-
     return div;
   };
 
@@ -5329,6 +5309,14 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.4.1<span>2026/08/24</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】スネージナヤ実装に伴い地方伝説の一覧の表記に不具合が起こっていた問題を修正しました</p>
+		<p>【ドラフト地方伝説】地方伝説の抽選数の初期値を20から99に変更しました</p>
+		<p>【完全ランダムボスバトル】スネージナヤ実装に伴い地方伝説の一覧の表記に不具合が起こっていた問題を修正しました</p>
+		<p>その他軽微な変更・修正をしました</p>
+	</div>
 
 	<div class="version">v2.4.0<span>2026/08/18</span></div>
 	<div class="details">
