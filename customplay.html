@@ -2005,7 +2005,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 // #######JoinGame抽選##################################################################################################################################################################################
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const JoinGame_lotteryBtn = document.getElementById("JoinGame_lottery");
   const JoinGame_resultContainer = document.getElementById("JoinGame_result");
 
@@ -2015,8 +2014,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const JoinGame_candidates =
       Array.from(document.querySelectorAll(selector)).filter(input =>
 
-        // ▼JoinGame用checkboxのみ対象
+        // ▼data-allselect="JG_(以下略)を対象
         input.dataset.allselect?.startsWith("JG_") &&
+
+        // ▼data-point_jaが存在するもののみ対象
+        input.dataset.point_ja !== undefined &&
 
         // ▼checkedのみ対象
         input.checked
@@ -2034,35 +2036,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!input) return `<div></div>`;
 
     return `
-<div class="background-${input.dataset.region_en} masked">
-  <div>${input.dataset.area_ja} / ${input.dataset.category_ja}</div>
-  <div>${input.dataset.point_ja}</div>
-</div>`;
+      <div class="background-${input.dataset.region_en} masked">
+        <div>${input.dataset.area_ja} / ${input.dataset.category_ja}</div>
+        <div>${input.dataset.point_ja}</div>
+      </div>
+    `;
   }
 
   // ▼結果生成＋Firebase保存
   function JoinGame_drawAndSave() {
 
-    const JoinGame_selectedInputs =
-      JoinGame_pickUniqueElements("input[type=checkbox]", 4);
-
+    const JoinGame_selectedInputs = JoinGame_pickUniqueElements("input[type=checkbox]", 4);
     const JoinGame_divs = [];
 
     for (let i = 0; i < 4; i++) {
-
-      const JoinGame_html =
-        JoinGame_createDivHTML(JoinGame_selectedInputs[i] || null);
-
+      const JoinGame_html = JoinGame_createDivHTML(JoinGame_selectedInputs[i] || null);
       JoinGame_divs.push(JoinGame_html);
-
       set(
         ref(database, `JoinGame/${i + 1}P`),
         JoinGame_html
       );
     }
 
-    JoinGame_resultContainer.innerHTML =
-      JoinGame_divs.join("");
+    JoinGame_resultContainer.innerHTML = `<div>${JoinGame_divs.join("")}</div><div style="min-height:12px;display:block;text-align:center;margin:0.5rem 0 0;">※抽選結果はオンラインで共有されています。マスク状態はオンラインで共有されておらず、ページを再読み込みするとすべてマスク状態に戻ります。</div>`;
   }
 
   // ▼Firebase監視
@@ -5309,6 +5305,12 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.4.2<span>2026/08/25</span></div>
+	<div class="details">
+		<p>【ばらばら合流ゲーム】再抽選をした際の結果が正常に表示されない問題を修正しました</p>
+		<p>その他軽微な変更・修正をしました</p>
+	</div>
 
 	<div class="version">v2.4.1<span>2026/08/24</span></div>
 	<div class="details">
