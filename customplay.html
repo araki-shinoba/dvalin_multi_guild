@@ -1443,13 +1443,17 @@ function render_DLLcharacterlist(list, className, statuses = {}) {
     const baseId = String(char.character_id || "").match(/^(\d{3})/)?.[1];
     const status = baseId ? statuses?.[baseId] : undefined;
 
+    const regionRegulationEn = String(char.region_regulation_en || "")
+      .split("/")
+      .join(" ");
+
     return `<label
       ${status !== undefined ? `data-dll-status="${status}"` : ``}
       data-dll-character_id="${baseId ?? ""}"
       data-dll-rarity="${char.rarity}"
       data-dll-element_en="${char.element_en}"
       data-dll-weapon_en="${char.weapon_en}"
-      data-dll-region_en="${char.region_en}"
+      data-dll-region_en="${regionRegulationEn}"
       data-dll-birth_month="${char.birth_month}"
       data-dll-birth_day="${char.birth_day}"
       data-dll-teambouns_en="${char.teambouns_en}"
@@ -2795,35 +2799,15 @@ function DraftLocalLegend_updateVisibility() {
 
     const weapon = label.dataset.dllWeapon_en;
     const element = label.dataset.dllElement_en;
-    const region = label.dataset.dllRegion_en;
+    const region = label.dataset.dllRegion_en.split(/\s+/).filter(Boolean);
     const birthM = label.dataset.dllBirth_month;
     const birthD = label.dataset.dllBirth_day;
 
-    const weaponMatch =
-      !allWeaponUnchecked &&
-      document.getElementById(
-        'Weapon' + weapon.charAt(0).toUpperCase() + weapon.slice(1) + 'Toggle'
-      )?.checked;
-
-    const elementMatch =
-      !allElementUnchecked &&
-      document.getElementById(
-        'Element' + element.charAt(0).toUpperCase() + element.slice(1) + 'Toggle'
-      )?.checked;
-
-    const regionMatch =
-      !allRegionUnchecked &&
-      document.getElementById(
-        'Region' + region.charAt(0).toUpperCase() + region.slice(1) + 'Toggle'
-      )?.checked;
-
-    const birthMMatch =
-      !allBirthMUnchecked &&
-      document.getElementById('BirthM' + birthM + 'Toggle')?.checked;
-
-    const birthDMatch =
-      !allBirthDUnchecked &&
-      document.getElementById('BirthD' + birthD + 'Toggle')?.checked;
+    const weaponMatch  = !allWeaponUnchecked  && document.getElementById('Weapon'  + weapon.charAt(0) .toUpperCase() + weapon.slice(1)  + 'Toggle')?.checked;
+    const elementMatch = !allElementUnchecked && document.getElementById('Element' + element.charAt(0).toUpperCase() + element.slice(1) + 'Toggle')?.checked;
+    const regionMatch  = !allRegionUnchecked  && region.some(value => document.getElementById('Region' + value.charAt(0).toUpperCase() + value.slice(1) + 'Toggle')?.checked);
+    const birthMMatch  = !allBirthMUnchecked  && document.getElementById('BirthM' + birthM + 'Toggle')?.checked;
+    const birthDMatch  = !allBirthDUnchecked  && document.getElementById('BirthD' + birthD + 'Toggle')?.checked;
 
     // ▼マイリスト判定
     let pickVisible = true;
@@ -5230,18 +5214,19 @@ try {
   const data = await response.json();
 
   const characterlist = (data.character_sheet ?? []).map(v => ({
-    character_id       : v.character_id === "" ? "" : String(v.character_id).padStart(3, "0"),
-    installation_check : v.installation_check ?? "",
-    name_ja            : v.name_ja ?? "",
-    element_en         : v.element_en ?? "",
-    rarity             : v.rarity ?? "",
-    weapon_en          : v.weapon_en ?? "",
-    teambouns_en       : v.teambouns_en ?? "",
-    region_en          : v.region_en ?? "",
-    birth_month        : v.birth_month === "" ? "" : String(v.birth_month).padStart(2, "0"),
-    birth_day          : v.birth_day === "" ? "" : String(v.birth_day).padStart(2, "0"),
-    characterlist_id   : v.characterlist_id ?? "",
-    selfaffected       : v.selfaffected ?? ""
+    character_id         : v.character_id === "" ? "" : String(v.character_id).padStart(3, "0"),
+    installation_check   : v.installation_check ?? "",
+    name_ja              : v.name_ja ?? "",
+    element_en           : v.element_en ?? "",
+    rarity               : v.rarity ?? "",
+    weapon_en            : v.weapon_en ?? "",
+    teambouns_en         : v.teambouns_en ?? "",
+    region_en            : v.region_en ?? "",
+    birth_month          : v.birth_month === "" ? "" : String(v.birth_month).padStart(2, "0"),
+    birth_day            : v.birth_day === "" ? "" : String(v.birth_day).padStart(2, "0"),
+    characterlist_id     : v.characterlist_id ?? "",
+    selfaffected         : v.selfaffected ?? "",
+    region_regulation_en : v.region_regulation_en ?? ""
   }));
 
   const customplaylist = (data.customplay_sheet ?? []).map(v => ({
@@ -5305,6 +5290,12 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.5.0<span>2026/08/27</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】国別絞り込みの参照元をHoYoWikiからオリジナルのものに変更しました<br>管理者向け：region_en→region_regulation_enに変更</p>
+		<p>その他、軽微な変更・修正をしました</p>
+	</div>
 
 	<div class="version">v2.4.2<span>2026/08/25</span></div>
 	<div class="details">
