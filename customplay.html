@@ -43,7 +43,7 @@ input[data-css="Fontaine_light"]:checked  ~ span,input[data-css="Hydro_light"]:c
 input[data-css="Natlan_light"]:checked    ~ span,input[data-css="Pyro_light"]:checked    ~ span{background:var(--pyro-light   );}
 input[data-css="Snezhnaya_light"]:checked ~ span,input[data-css="Cryo_light"]:checked    ~ span{background:var(--cryo-light   );}
 input[data-css="NodKrai_light"]:checked   ~ span                                               {background:var(--lunar-light  );}
-input[data-css="none_light"]:checked      ~ span                                               {background:#ccc                ;}
+input[data-css="none_light"]:checked      ~ span                                               {background:var(--none-light   );}
 
 label input{display:none;}
 label                > span       {display:inline-block;border:1px solid #4324;border-radius:1rem;margin:2px;padding:4px 8px;text-align:center;}
@@ -193,6 +193,7 @@ body:has(#stellarreactionToggle:checked) label[data-dll-teambouns_en="stellarrea
 }
 
 /*▼ドラフト地方伝説　キャラ使用状況の表示*/
+               td[data-dll-characterelement]           label                      > span > span{display:none;}
                td[data-dll-characterelement]           label                      > span{display:inline-block;border:1px solid #4324;border-radius:1rem;padding:4px 8px;}
 .DLL_streaming td[data-dll-characterelement]           label                      > span{display:inline-block;border:1px solid #4324;border-radius:4px ;padding:2px;margin:1px;}
                td[data-dll-characterelement="anemo"]   label[data-dll-status="0"] > span{background:var(--anemo-dark)   ;color:#fff;}
@@ -421,6 +422,303 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 
 	<hr style="margin:5rem auto;">
 
+<!--######ここからオプション######-->
+
+	<label class="DraftLocalLegend_optionToggleLabel"><input type="checkbox" class="DraftLocalLegend_optionToggleInput"><p>オプションを表示する</p><p>オプションを閉じる</p></label>
+
+	<div class="DraftLocalLegend_readyThinking" style="background:#eeed;border:1px #aaa;border-style:none none solid;box-sizing:border-box;">
+		<div style="text-align:center;">
+				残り時間：<div id="DraftLocalLegend_ReadyThinkingTimer" style="font-size:1rem;font-weight:bold;display:inline-block;"></div>
+				 / 
+				キャラクター決定：
+				<label><input type="checkbox" data-dll-opt-status="11" data-css="none"><span>1P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="12" data-css="none"><span>2P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="13" data-css="none"><span>3P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="14" data-css="none"><span>4P</span></label>
+				 / 
+				戦闘準備完了：
+				<label><input type="checkbox" data-dll-opt-status="21" data-css="none"><span>1P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="22" data-css="none"><span>2P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="23" data-css="none"><span>3P</span></label>
+				<label><input type="checkbox" data-dll-opt-status="24" data-css="none"><span>4P</span></label>
+		</div>
+	</div>
+
+	<div class="DraftLocalLegend_option" style="padding:2rem 0.5rem 0.5rem;width:500px;height:100%;overflow-y:scroll;background:#eeed;border:1px solid #aaa;box-sizing:border-box;">
+
+		<details open><summary>キャラクター重複回避用抽選機<button class="help-button" data-help-id="help5">？</button></summary>
+			<div id="help5" class="help-popup">
+				<p>使用するキャラクターが重複した場合は、本抽選機を使用してください。<br>なお、同じ抽選結果を繰り返し利用することを避けるため、30秒経過で自動的に抽選結果を非表示にしています。</p>
+			</div>
+			<div style="display:flex;">
+				<input type="button" value="抽選" id="DraftLocalLegend_CharacterChange" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_CharacterChangeResult" style="margin-right:0.5rem;"></div>
+			</div>
+		</details>
+
+		<details><summary>元素抽選機<button class="help-button" data-help-id="help3">？</button></summary>
+			<div id="help3" class="help-popup">
+				<p>1行目から4行目までがそれぞれ独立して抽選されます。特定の元素が必要な場合は、その元素のみを選択した行がある状態で抽選してください</p>
+			</div>
+			<table border="1" style="margin:0.5rem auto 0;">
+				<tr><td>選択肢1/1P<td>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="11" data-css="Anemo_light"  ><span>風</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="12" data-css="Geo_light"    ><span>岩</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="13" data-css="Electro_light"><span>雷</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="14" data-css="Dendro_light" ><span>草</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="15" data-css="Hydro_light"  ><span>水</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="16" data-css="Pyro_light"   ><span>炎</span></label>
+					<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="17" data-css="Cryo_light"   ><span>氷</span></label>
+				<tr><td>選択肢2/2P<td>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="21" data-css="Anemo_light"  ><span>風</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="22" data-css="Geo_light"    ><span>岩</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="23" data-css="Electro_light"><span>雷</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="24" data-css="Dendro_light" ><span>草</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="25" data-css="Hydro_light"  ><span>水</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="26" data-css="Pyro_light"   ><span>炎</span></label>
+					<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="27" data-css="Cryo_light"   ><span>氷</span></label>
+				<tr><td>選択肢3/3P<td>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="31" data-css="Anemo_light"  ><span>風</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="32" data-css="Geo_light"    ><span>岩</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="33" data-css="Electro_light"><span>雷</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="34" data-css="Dendro_light" ><span>草</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="35" data-css="Hydro_light"  ><span>水</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="36" data-css="Pyro_light"   ><span>炎</span></label>
+					<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="37" data-css="Cryo_light"   ><span>氷</span></label>
+				<tr><td>選択肢4/4P<td>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="41" data-css="Anemo_light"  ><span>風</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="42" data-css="Geo_light"    ><span>岩</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="43" data-css="Electro_light"><span>雷</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="44" data-css="Dendro_light" ><span>草</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="45" data-css="Hydro_light"  ><span>水</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="46" data-css="Pyro_light"   ><span>炎</span></label>
+					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="47" data-css="Cryo_light"   ><span>氷</span></label>
+			</table>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_Element" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_ElementResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
+			</div>
+		</details>
+
+		<details><summary>武器種抽選機<button class="help-button" data-help-id="help6">？</button></summary>
+			<div id="help6" class="help-popup">
+				<p>1行目から4行目までがそれぞれ独立して抽選されます。特定の武器種が必要な場合は、その武器種のみを選択した行がある状態で抽選してください</p>
+			</div>
+			<table border="1" style="margin:0.5rem auto 0;">
+				<tr><td>選択肢1/1P<td>
+					<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="11" data-css="none_light"><span>片手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="12" data-css="none_light"><span>両手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="13" data-css="none_light"><span>長柄武器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="14" data-css="none_light"><span>法器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="15" data-css="none_light"><span>弓</span></label>
+				<tr><td>選択肢2/2P<td>
+					<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="21" data-css="none_light"><span>片手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="22" data-css="none_light"><span>両手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="23" data-css="none_light"><span>長柄武器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="24" data-css="none_light"><span>法器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="25" data-css="none_light"><span>弓</span></label>
+				<tr><td>選択肢3/3P<td>
+					<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="31" data-css="none_light"><span>片手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="32" data-css="none_light"><span>両手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="33" data-css="none_light"><span>長柄武器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="34" data-css="none_light"><span>法器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="35" data-css="none_light"><span>弓</span></label>
+				<tr><td>選択肢4/4P<td>
+					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="41" data-css="none_light"><span>片手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="42" data-css="none_light"><span>両手剣</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="43" data-css="none_light"><span>長柄武器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="44" data-css="none_light"><span>法器</span></label>
+					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="45" data-css="none_light"><span>弓</span></label>
+			</table>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_Weapon" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_WeaponResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
+			</div>
+		</details>
+
+		<details><summary>元素反応抽選機</summary>
+			<table style="margin:auto;border:none;overflow:scroll;width:auto;">
+				<colgroup>
+					<col style="width:70px;">
+					<col style="width:70px;">
+					<col style="width:70px;">
+					<col style="width:70px;">
+					<col style="width:70px;">
+				</colgroup>
+				<tr><td><label><input type="checkbox" data-dll-opt-reaction="electroswirl"        class="electroswirl"       ><span style="width:calc(100% - 16px);text-wrap:wrap;">雷拡散  </span></label>
+				    <td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="hydroswirl"          class="hydroswirl"         ><span style="width:calc(100% - 16px);text-wrap:wrap;">水拡散  </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="pyroswirl"           class="pyroswirl"          ><span style="width:calc(100% - 16px);text-wrap:wrap;">炎拡散  </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="cryoswirl"           class="cryoswirl"          ><span style="width:calc(100% - 16px);text-wrap:wrap;">氷拡散  </span></label>
+				<tr><td><label><input type="checkbox" data-dll-opt-reaction="electrocrystallise"  class="electrocrystallise" ><span style="width:calc(100% - 16px);text-wrap:wrap;">雷結晶化</span></label>
+				    <td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="hydrocrystallise"    class="hydrocrystallise"   ><span style="width:calc(100% - 16px);text-wrap:wrap;">水結晶化</span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="pyrocrystallise"     class="pyrocrystallise"    ><span style="width:calc(100% - 16px);text-wrap:wrap;">炎結晶化</span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="cryocrystallise"     class="cryocrystallise"    ><span style="width:calc(100% - 16px);text-wrap:wrap;">氷結晶化</span></label>
+				<tr><td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="catalyze"            class="catalyze"           ><span style="width:calc(100% - 16px);text-wrap:wrap;">激化    </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="electrocharged"      class="electrocharged"     ><span style="width:calc(100% - 16px);text-wrap:wrap;">感電    </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="overloaded"          class="overloaded"         ><span style="width:calc(100% - 16px);text-wrap:wrap;">過負荷  </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="superconduct"        class="superconduct"       ><span style="width:calc(100% - 16px);text-wrap:wrap;">超電導  </span></label>
+				<tr><td>
+				    <td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="bloom"               class="bloom"              ><span style="width:calc(100% - 16px);text-wrap:wrap;">開花    </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="burning"             class="burning"            ><span style="width:calc(100% - 16px);text-wrap:wrap;">燃焼    </span></label>
+				    <td>
+				<tr><td>
+				    <td>
+				    <td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="vaporise"            class="vaporise"           ><span style="width:calc(100% - 16px);text-wrap:wrap;">蒸発    </span></label>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="frozen"              class="frozen"             ><span style="width:calc(100% - 16px);text-wrap:wrap;">凍結    </span></label>
+				<tr><td>
+				    <td>
+				    <td>
+				    <td>
+				    <td><label><input type="checkbox" data-dll-opt-reaction="melt"                class="melt"               ><span style="width:calc(100% - 16px);text-wrap:wrap;">溶解    </span></label>
+			</table>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_ElementalReaction" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_ElementalReactionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
+			</div>
+		</details>
+
+		<details><summary>国別抽選機</summary>
+			<table border="1" style="margin:auto;">
+				<tr><td>選択肢1/1P<td>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="11" data-css="Mondstadt_light"><span>モンド</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="12" data-css="Liyue_light"    ><span>璃月</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="13" data-css="Inazuma_light"  ><span>稲妻</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="14" data-css="Sumeru_light"   ><span>スメール</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="15" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="16" data-css="Natlan_light"   ><span>ナタ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="17" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="18" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="19" data-css="none_light"     ><span>外の世界</span></label>
+				<tr><td>選択肢2/2P<td>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="21" data-css="Mondstadt_light"><span>モンド</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="22" data-css="Liyue_light"    ><span>璃月</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="23" data-css="Inazuma_light"  ><span>稲妻</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="24" data-css="Sumeru_light"   ><span>スメール</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="25" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="26" data-css="Natlan_light"   ><span>ナタ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="27" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="28" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="29" data-css="none_light"     ><span>外の世界</span></label>
+				<tr><td>選択肢3/3P<td>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="31" data-css="Mondstadt_light"><span>モンド</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="32" data-css="Liyue_light"    ><span>璃月</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="33" data-css="Inazuma_light"  ><span>稲妻</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="34" data-css="Sumeru_light"   ><span>スメール</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="35" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="36" data-css="Natlan_light"   ><span>ナタ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="37" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="38" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="39" data-css="none_light"     ><span>外の世界</span></label>
+				<tr><td>選択肢4/4P<td>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="41" data-css="Mondstadt_light"><span>モンド</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="42" data-css="Liyue_light"    ><span>璃月</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="43" data-css="Inazuma_light"  ><span>稲妻</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="44" data-css="Sumeru_light"   ><span>スメール</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="45" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="46" data-css="Natlan_light"   ><span>ナタ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="47" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="48" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
+					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="49" data-css="none_light"     ><span>外の世界</span></label>
+			</table>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_Region" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_RegionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
+			</div>
+		</details>
+
+		<details><summary>誕生日抽選機</summary>
+			<div style="margin:1rem;text-align:center;">
+				<input type="number" id="DraftLocalLegend_BirthMDice" style="width:40px;" value="2"> d12 / 
+				<input type="number" id="DraftLocalLegend_BirthDDice" style="width:40px;" value="5"> d31
+			</div>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_Birth" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<div id="DraftLocalLegend_BirthResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
+			</div>
+		</details>
+
+		<details open><summary>コスト抽選機<button class="help-button" data-help-id="help1">？</button></summary>
+			<div id="help1" class="help-popup">
+				<p>◆復活コストについて</p>
+				<p>復活コスト1で、ランダムに選ばれたキャラクター1体を【使用済(戦闘不能)→使用済(生存)】または【使用済(生存)→未使用】に変更します</p>
+				<p>復活コストを2以上に設定する場合、同じキャラクターが2回選ばれる場合があります</p>
+				<p>キャラクターの即復活ボタンにチェックを入れると、復活コスト1で【使用済(戦闘不能)→未使用】または【使用済(生存)→未使用】にします</p>
+				<p>復活コストを負の値に設定すると、ランダムに選ばれたキャラクターを使用済に変更します</p>
+			</div>
+			<div style="margin:1rem;">
+				<div style="text-align:center;">
+					現在の生存率： <span id="DraftLocalLegend_proportion1"></span> / <span id="DraftLocalLegend_proportion2"></span> ( <span id="DraftLocalLegend_percentage"></span> )<br><br>
+					復活コスト：<input type="number" id="DraftLocalLegend_CharacterRechargeNormalCost" style="width:40px;" value="5"><br>
+					星5即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR5">
+					 / 
+					星4即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR4"><br>
+					<input type="button" value="抽選" id="DraftLocalLegend_CharacterRechargeNormal" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				</div>
+				<div id="DraftLocalLegend_CharacterRechargeResultNormal"></div>
+			</div>
+		</details>
+
+		<details><summary>タイマー</summary>
+			<input type="button" id="DraftLocalLegend_TimerToggle" style="width:160px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;" value="リセット・スタート">
+			<span id="DraftLocalLegend_Timer" style="margin:1rem;font-weight:bold;"></span>
+			<div style="margin:0 1rem;">▼メモ(記載した内容はページを閉じても保存されます)</div>
+			<textarea id="DraftLocalLegend_TimerMemo" style="width:calc(100% - 2rem);height:10rem;margin:0.5rem 1rem 1rem;box-sizing:border-box;"></textarea>
+		</details>
+
+		<details><summary>セーブデータ自動生成機<button class="help-button" data-help-id="help2">？</button></summary>
+			<div id="help2" class="help-popup">
+				<p>一部のキャラクターが使えない状態のセーブデータから始めたい場合は、この生成機を使用してセーブデータを生成してください</p>
+			</div>
+			<div style="text-align:center;margin:0.5rem auto 0;">
+				<div style="text-align:right;display:inline-block;">
+					<div>
+						<span>未使用の比率：</span>
+						<input type="number" id="DraftLocalLegend_SaveDataCreateZero" value="6" style="width:40px;">
+					</div>
+					<div>
+						<span>使用済(生存)の比率：</span>
+						<input type="number" id="DraftLocalLegend_SaveDataCreateOne" value="2" style="width:40px;">
+					</div>
+					<div>
+						<span>使用済(戦闘不能)の比率：</span>
+						<input type="number" id="DraftLocalLegend_SaveDataCreateTwo" value="1" style="width:40px;">
+					</div>
+				</div>
+			</div>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_SaveDataCreate" value="作成" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_SaveDataCreateResult" readonly style="width:calc(100% - 80px - 3rem);margin:0.75rem 1rem 1rem 0;">
+			</div>
+		</details>
+
+		<details><summary>カスタムキャラクターリスト用コード生成機</summary>
+			<table border="1" style="margin:0.5rem 1rem 0;">
+				<tr><td class="background-Mondstadt"><div class="characterlist_anemo   customcharacterlist"></div>
+				<tr><td class="background-Liyue"    ><div class="characterlist_geo     customcharacterlist"></div>
+				<tr><td class="background-Inazuma"  ><div class="characterlist_electro customcharacterlist"></div>
+				<tr><td class="background-Sumeru"   ><div class="characterlist_dendro  customcharacterlist"></div>
+				<tr><td class="background-Fontaine" ><div class="characterlist_hydro   customcharacterlist"></div>
+				<tr><td class="background-Natlan"   ><div class="characterlist_pyro    customcharacterlist"></div>
+				<tr><td class="background-Snezhnaya"><div class="characterlist_cryo    customcharacterlist"></div>
+				<tr><td class="background-none"     ><div class="characterlist_none    customcharacterlist"></div>
+			</table>
+			<div style="padding:1rem 0;">
+				<input type="button" id="DraftLocalLegend_InBtCharacterpick" value="インポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_InTeCharacterpick" style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 0 1rem;">
+				<input type="button" id="DraftLocalLegend_ExBtCharacterpick" value="エクスポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_ExTeCharacterpick" readonly style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 0 1rem;">
+			</div>
+		</details>
+
+	</div>
+
+<!--######ここまでオプション######-->
+
 	<table border="1" id="DraftLocalLegend_characterlist_list" style="width:100%;">
 		<colgroup>
 			<col>
@@ -430,77 +728,77 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 		</colgroup>
 		<tr><th colspan="4" style="text-align:center;font-size:1.5rem;padding:0.5rem;background:#444;color:#fff;">キャラクターリスト(すべて五十音順)
 		<tr><td colspan="4" style="text-align:center;">
-			<label><input type="checkbox" id="DetailToggle"         checked data-css="none"><span>元素付着情報の表示</span></label>
+			<label><input type="checkbox" id="DetailToggle"          data-css="none"><span>元素付着情報の表示</span></label>
 		<tr><td colspan="4" style="text-align:center;">
-			<label><input type="checkbox" id="hexereiToggle"                data-css="none"><span>魔導</span></label>
-			<label><input type="checkbox" id="moonsignToggle"               data-css="none"><span>月兆</span></label>
-			<label><input type="checkbox" id="stellarreactionToggle"        data-css="none"><span>星の楔</span></label>
+			<label><input type="checkbox" id="hexereiToggle"         data-css="none"><span>魔導</span></label>
+			<label><input type="checkbox" id="moonsignToggle"        data-css="none"><span>月兆</span></label>
+			<label><input type="checkbox" id="stellarreactionToggle" data-css="none"><span>星の楔</span></label>
 		<tr><td colspan="4" style="text-align:center;">
-			<label><input type="checkbox" id="ElementAnemoToggle"           data-css="none"><span>風          </span></label>
-			<label><input type="checkbox" id="ElementGeoToggle"             data-css="none"><span>岩          </span></label>
-			<label><input type="checkbox" id="ElementElectroToggle"         data-css="none"><span>雷          </span></label>
-			<label><input type="checkbox" id="ElementDendroToggle"          data-css="none"><span>草          </span></label>
-			<label><input type="checkbox" id="ElementHydroToggle"           data-css="none"><span>水          </span></label>
-			<label><input type="checkbox" id="ElementPyroToggle"            data-css="none"><span>炎          </span></label>
-			<label><input type="checkbox" id="ElementCryoToggle"            data-css="none"><span>氷          </span></label><br>
-			<label><input type="checkbox" id="WeaponSwordToggle"            data-css="none"><span>片手剣      </span></label>
-			<label><input type="checkbox" id="WeaponClaymoreToggle"         data-css="none"><span>両手剣      </span></label>
-			<label><input type="checkbox" id="WeaponPolearmToggle"          data-css="none"><span>長柄武器    </span></label>
-			<label><input type="checkbox" id="WeaponCatalystToggle"         data-css="none"><span>法器        </span></label>
-			<label><input type="checkbox" id="WeaponBowToggle"              data-css="none"><span>弓          </span></label><br>
-			<label><input type="checkbox" id="RegionMondstadtToggle"        data-css="none"><span>モンド      </span></label>
-			<label><input type="checkbox" id="RegionLiyueToggle"            data-css="none"><span>璃月        </span></label>
-			<label><input type="checkbox" id="RegionInazumaToggle"          data-css="none"><span>稲妻        </span></label>
-			<label><input type="checkbox" id="RegionSumeruToggle"           data-css="none"><span>スメール    </span></label>
-			<label><input type="checkbox" id="RegionFontaineToggle"         data-css="none"><span>フォンテーヌ</span></label>
-			<label><input type="checkbox" id="RegionNatlanToggle"           data-css="none"><span>ナタ        </span></label>
-			<label><input type="checkbox" id="RegionNodKraiToggle"          data-css="none"><span>ナド・クライ</span></label>
-			<label><input type="checkbox" id="RegionSnezhnayaToggle"        data-css="none"><span>スネージナヤ</span></label>
-			<label><input type="checkbox" id="RegionOutsideToggle"          data-css="none"><span>外の世界    </span></label><br>
+			<label><input type="checkbox" id="ElementAnemoToggle"    data-css="none"><span>風          </span></label>
+			<label><input type="checkbox" id="ElementGeoToggle"      data-css="none"><span>岩          </span></label>
+			<label><input type="checkbox" id="ElementElectroToggle"  data-css="none"><span>雷          </span></label>
+			<label><input type="checkbox" id="ElementDendroToggle"   data-css="none"><span>草          </span></label>
+			<label><input type="checkbox" id="ElementHydroToggle"    data-css="none"><span>水          </span></label>
+			<label><input type="checkbox" id="ElementPyroToggle"     data-css="none"><span>炎          </span></label>
+			<label><input type="checkbox" id="ElementCryoToggle"     data-css="none"><span>氷          </span></label><br>
+			<label><input type="checkbox" id="WeaponSwordToggle"     data-css="none"><span>片手剣      </span></label>
+			<label><input type="checkbox" id="WeaponClaymoreToggle"  data-css="none"><span>両手剣      </span></label>
+			<label><input type="checkbox" id="WeaponPolearmToggle"   data-css="none"><span>長柄武器    </span></label>
+			<label><input type="checkbox" id="WeaponCatalystToggle"  data-css="none"><span>法器        </span></label>
+			<label><input type="checkbox" id="WeaponBowToggle"       data-css="none"><span>弓          </span></label><br>
+			<label><input type="checkbox" id="RegionMondstadtToggle" data-css="none"><span>モンド      </span></label>
+			<label><input type="checkbox" id="RegionLiyueToggle"     data-css="none"><span>璃月        </span></label>
+			<label><input type="checkbox" id="RegionInazumaToggle"   data-css="none"><span>稲妻        </span></label>
+			<label><input type="checkbox" id="RegionSumeruToggle"    data-css="none"><span>スメール    </span></label>
+			<label><input type="checkbox" id="RegionFontaineToggle"  data-css="none"><span>フォンテーヌ</span></label>
+			<label><input type="checkbox" id="RegionNatlanToggle"    data-css="none"><span>ナタ        </span></label>
+			<label><input type="checkbox" id="RegionNodKraiToggle"   data-css="none"><span>ナド・クライ</span></label>
+			<label><input type="checkbox" id="RegionSnezhnayaToggle" data-css="none"><span>スネージナヤ</span></label>
+			<label><input type="checkbox" id="RegionOutsideToggle"   data-css="none"><span>外の世界    </span></label><br>
 		<tr><td colspan="4" style="text-align:center;">
-			<label><input type="checkbox" id="BirthM01Toggle"               data-css="none"><span>1 </span></label>
-			<label><input type="checkbox" id="BirthM02Toggle"               data-css="none"><span>2 </span></label>
-			<label><input type="checkbox" id="BirthM03Toggle"               data-css="none"><span>3 </span></label>
-			<label><input type="checkbox" id="BirthM04Toggle"               data-css="none"><span>4 </span></label>
-			<label><input type="checkbox" id="BirthM05Toggle"               data-css="none"><span>5 </span></label>
-			<label><input type="checkbox" id="BirthM06Toggle"               data-css="none"><span>6 </span></label>
-			<label><input type="checkbox" id="BirthM07Toggle"               data-css="none"><span>7 </span></label>
-			<label><input type="checkbox" id="BirthM08Toggle"               data-css="none"><span>8 </span></label>
-			<label><input type="checkbox" id="BirthM09Toggle"               data-css="none"><span>9 </span></label>
-			<label><input type="checkbox" id="BirthM10Toggle"               data-css="none"><span>10</span></label>
-			<label><input type="checkbox" id="BirthM11Toggle"               data-css="none"><span>11</span></label>
-			<label><input type="checkbox" id="BirthM12Toggle"               data-css="none"><span>12</span></label><hr style="border:0;height:1px;background:linear-gradient(90deg,transparent,#ddd,#ddd,transparent);margin:0;">
-			<label><input type="checkbox" id="BirthD01Toggle"               data-css="none"><span>1 </span></label>
-			<label><input type="checkbox" id="BirthD02Toggle"               data-css="none"><span>2 </span></label>
-			<label><input type="checkbox" id="BirthD03Toggle"               data-css="none"><span>3 </span></label>
-			<label><input type="checkbox" id="BirthD04Toggle"               data-css="none"><span>4 </span></label>
-			<label><input type="checkbox" id="BirthD05Toggle"               data-css="none"><span>5 </span></label>
-			<label><input type="checkbox" id="BirthD06Toggle"               data-css="none"><span>6 </span></label>
-			<label><input type="checkbox" id="BirthD07Toggle"               data-css="none"><span>7 </span></label>
-			<label><input type="checkbox" id="BirthD08Toggle"               data-css="none"><span>8 </span></label>
-			<label><input type="checkbox" id="BirthD09Toggle"               data-css="none"><span>9 </span></label>
-			<label><input type="checkbox" id="BirthD10Toggle"               data-css="none"><span>10</span></label>
-			<label><input type="checkbox" id="BirthD11Toggle"               data-css="none"><span>11</span></label>
-			<label><input type="checkbox" id="BirthD12Toggle"               data-css="none"><span>12</span></label>
-			<label><input type="checkbox" id="BirthD13Toggle"               data-css="none"><span>13</span></label>
-			<label><input type="checkbox" id="BirthD14Toggle"               data-css="none"><span>14</span></label>
-			<label><input type="checkbox" id="BirthD15Toggle"               data-css="none"><span>15</span></label><br>
-			<label><input type="checkbox" id="BirthD16Toggle"               data-css="none"><span>16</span></label>
-			<label><input type="checkbox" id="BirthD17Toggle"               data-css="none"><span>17</span></label>
-			<label><input type="checkbox" id="BirthD18Toggle"               data-css="none"><span>18</span></label>
-			<label><input type="checkbox" id="BirthD19Toggle"               data-css="none"><span>19</span></label>
-			<label><input type="checkbox" id="BirthD20Toggle"               data-css="none"><span>20</span></label>
-			<label><input type="checkbox" id="BirthD21Toggle"               data-css="none"><span>21</span></label>
-			<label><input type="checkbox" id="BirthD22Toggle"               data-css="none"><span>22</span></label>
-			<label><input type="checkbox" id="BirthD23Toggle"               data-css="none"><span>23</span></label>
-			<label><input type="checkbox" id="BirthD24Toggle"               data-css="none"><span>24</span></label>
-			<label><input type="checkbox" id="BirthD25Toggle"               data-css="none"><span>25</span></label>
-			<label><input type="checkbox" id="BirthD26Toggle"               data-css="none"><span>26</span></label>
-			<label><input type="checkbox" id="BirthD27Toggle"               data-css="none"><span>27</span></label>
-			<label><input type="checkbox" id="BirthD28Toggle"               data-css="none"><span>28</span></label>
-			<label><input type="checkbox" id="BirthD29Toggle"               data-css="none"><span>29</span></label>
-			<label><input type="checkbox" id="BirthD30Toggle"               data-css="none"><span>30</span></label>
-			<label><input type="checkbox" id="BirthD31Toggle"               data-css="none"><span>31</span></label>
+			<label><input type="checkbox" id="BirthM01Toggle"        data-css="none"><span>1 </span></label>
+			<label><input type="checkbox" id="BirthM02Toggle"        data-css="none"><span>2 </span></label>
+			<label><input type="checkbox" id="BirthM03Toggle"        data-css="none"><span>3 </span></label>
+			<label><input type="checkbox" id="BirthM04Toggle"        data-css="none"><span>4 </span></label>
+			<label><input type="checkbox" id="BirthM05Toggle"        data-css="none"><span>5 </span></label>
+			<label><input type="checkbox" id="BirthM06Toggle"        data-css="none"><span>6 </span></label>
+			<label><input type="checkbox" id="BirthM07Toggle"        data-css="none"><span>7 </span></label>
+			<label><input type="checkbox" id="BirthM08Toggle"        data-css="none"><span>8 </span></label>
+			<label><input type="checkbox" id="BirthM09Toggle"        data-css="none"><span>9 </span></label>
+			<label><input type="checkbox" id="BirthM10Toggle"        data-css="none"><span>10</span></label>
+			<label><input type="checkbox" id="BirthM11Toggle"        data-css="none"><span>11</span></label>
+			<label><input type="checkbox" id="BirthM12Toggle"        data-css="none"><span>12</span></label><hr style="border:0;height:1px;background:linear-gradient(90deg,transparent,#ddd,#ddd,transparent);margin:0;">
+			<label><input type="checkbox" id="BirthD01Toggle"        data-css="none"><span>1 </span></label>
+			<label><input type="checkbox" id="BirthD02Toggle"        data-css="none"><span>2 </span></label>
+			<label><input type="checkbox" id="BirthD03Toggle"        data-css="none"><span>3 </span></label>
+			<label><input type="checkbox" id="BirthD04Toggle"        data-css="none"><span>4 </span></label>
+			<label><input type="checkbox" id="BirthD05Toggle"        data-css="none"><span>5 </span></label>
+			<label><input type="checkbox" id="BirthD06Toggle"        data-css="none"><span>6 </span></label>
+			<label><input type="checkbox" id="BirthD07Toggle"        data-css="none"><span>7 </span></label>
+			<label><input type="checkbox" id="BirthD08Toggle"        data-css="none"><span>8 </span></label>
+			<label><input type="checkbox" id="BirthD09Toggle"        data-css="none"><span>9 </span></label>
+			<label><input type="checkbox" id="BirthD10Toggle"        data-css="none"><span>10</span></label>
+			<label><input type="checkbox" id="BirthD11Toggle"        data-css="none"><span>11</span></label>
+			<label><input type="checkbox" id="BirthD12Toggle"        data-css="none"><span>12</span></label>
+			<label><input type="checkbox" id="BirthD13Toggle"        data-css="none"><span>13</span></label>
+			<label><input type="checkbox" id="BirthD14Toggle"        data-css="none"><span>14</span></label>
+			<label><input type="checkbox" id="BirthD15Toggle"        data-css="none"><span>15</span></label><br>
+			<label><input type="checkbox" id="BirthD16Toggle"        data-css="none"><span>16</span></label>
+			<label><input type="checkbox" id="BirthD17Toggle"        data-css="none"><span>17</span></label>
+			<label><input type="checkbox" id="BirthD18Toggle"        data-css="none"><span>18</span></label>
+			<label><input type="checkbox" id="BirthD19Toggle"        data-css="none"><span>19</span></label>
+			<label><input type="checkbox" id="BirthD20Toggle"        data-css="none"><span>20</span></label>
+			<label><input type="checkbox" id="BirthD21Toggle"        data-css="none"><span>21</span></label>
+			<label><input type="checkbox" id="BirthD22Toggle"        data-css="none"><span>22</span></label>
+			<label><input type="checkbox" id="BirthD23Toggle"        data-css="none"><span>23</span></label>
+			<label><input type="checkbox" id="BirthD24Toggle"        data-css="none"><span>24</span></label>
+			<label><input type="checkbox" id="BirthD25Toggle"        data-css="none"><span>25</span></label>
+			<label><input type="checkbox" id="BirthD26Toggle"        data-css="none"><span>26</span></label>
+			<label><input type="checkbox" id="BirthD27Toggle"        data-css="none"><span>27</span></label>
+			<label><input type="checkbox" id="BirthD28Toggle"        data-css="none"><span>28</span></label>
+			<label><input type="checkbox" id="BirthD29Toggle"        data-css="none"><span>29</span></label>
+			<label><input type="checkbox" id="BirthD30Toggle"        data-css="none"><span>30</span></label>
+			<label><input type="checkbox" id="BirthD31Toggle"        data-css="none"><span>31</span></label>
 		<tr><td colspan="4" style="text-align:center;">
 			<select id="DraftLocalLegend_filtertype" style="margin:4px 0;">
 				<option value=""></option>
@@ -585,317 +883,31 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 		</div>
 	</div>
 
-	<hr style="margin:5rem auto;">
 
-	<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">オプション</div>
+<style type="text/css">
+/* ▼オプションのdetails/summary/help-button */
+div#DraftLocalLegend div.DraftLocalLegend_option details{background:transparent;position:relative;border:1px solid #888;margin:1rem 0;}
+div#DraftLocalLegend div.DraftLocalLegend_option summary{background:#444;color:#fff;padding-right:2rem;}
+div#DraftLocalLegend div.DraftLocalLegend_option button.help-button{position:absolute;top:0.25rem;right:0.25rem;}
 
-	<details open>
-		<summary>汎用</summary>
-		<div class="DraftLocalLegend_lottery">
-			<div style="position:relative;">
-				<button class="help-button" data-help-id="help5">？</button>
-				<div id="help5" class="help-popup">
-					<p>使用するキャラクターが重複した場合は、本抽選機を使用してください。<br>なお、同じ抽選結果を繰り返し利用することを避けるため、30秒経過で自動的に抽選結果を非表示にしています。</p>
-				</div>
-				<div style="margin:1rem;text-align:center;">キャラクター重複回避用抽選機<br></div>
-				<div style="display:flex;">
-					<input type="button" value="抽選" id="DraftLocalLegend_CharacterChange" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_CharacterChangeResult" style="margin-right:0.5rem;"></div>
-				</div>
-			</div>
-		</div>
-		<div class="DraftLocalLegend_lottery">
-			<div>
-				<button class="help-button" data-help-id="help3">？</button>
-				<div id="help3" class="help-popup">
-					<p>1行目から4行目までがそれぞれ独立して抽選されます。特定の元素が必要な場合は、その元素のみを選択した行がある状態で抽選してください</p>
-				</div>
-				<div style="margin:1rem;text-align:center;">元素抽選機</div>
-				<table border="1" style="margin:auto;">
-					<tr><td>選択肢1/1P<td>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="11" data-css="Anemo_light"  ><span>風</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="12" data-css="Geo_light"    ><span>岩</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="13" data-css="Electro_light"><span>雷</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="14" data-css="Dendro_light" ><span>草</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="15" data-css="Hydro_light"  ><span>水</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="16" data-css="Pyro_light"   ><span>炎</span></label>
-						<label><input type="checkbox" data-dll-opt-element="A" data-dll-opt-elementnumber="17" data-css="Cryo_light"   ><span>氷</span></label>
-					<tr><td>選択肢2/2P<td>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="21" data-css="Anemo_light"  ><span>風</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="22" data-css="Geo_light"    ><span>岩</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="23" data-css="Electro_light"><span>雷</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="24" data-css="Dendro_light" ><span>草</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="25" data-css="Hydro_light"  ><span>水</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="26" data-css="Pyro_light"   ><span>炎</span></label>
-						<label><input type="checkbox" data-dll-opt-element="B" data-dll-opt-elementnumber="27" data-css="Cryo_light"   ><span>氷</span></label>
-					<tr><td>選択肢3/3P<td>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="31" data-css="Anemo_light"  ><span>風</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="32" data-css="Geo_light"    ><span>岩</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="33" data-css="Electro_light"><span>雷</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="34" data-css="Dendro_light" ><span>草</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="35" data-css="Hydro_light"  ><span>水</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="36" data-css="Pyro_light"   ><span>炎</span></label>
-						<label><input type="checkbox" data-dll-opt-element="C" data-dll-opt-elementnumber="37" data-css="Cryo_light"   ><span>氷</span></label>
-					<tr><td>選択肢4/4P<td>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="41" data-css="Anemo_light"  ><span>風</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="42" data-css="Geo_light"    ><span>岩</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="43" data-css="Electro_light"><span>雷</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="44" data-css="Dendro_light" ><span>草</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="45" data-css="Hydro_light"  ><span>水</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="46" data-css="Pyro_light"   ><span>炎</span></label>
-						<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="47" data-css="Cryo_light"   ><span>氷</span></label>
-				</table>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_Element" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_ElementResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
-				</div>
-			</div>
-			<div>
-				<div style="margin:1rem;text-align:center;">武器種抽選機</div>
-				<button class="help-button" data-help-id="help6">？</button>
-				<div id="help6" class="help-popup">
-					<p>1行目から4行目までがそれぞれ独立して抽選されます。特定の武器種が必要な場合は、その武器種のみを選択した行がある状態で抽選してください</p>
-				</div>
-				<table border="1" style="margin:auto;">
-					<tr><td>選択肢1/1P<td>
-						<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="11" data-css="none_light"><span>片手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="12" data-css="none_light"><span>両手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="13" data-css="none_light"><span>長柄武器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="14" data-css="none_light"><span>法器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="A" data-dll-opt-weaponnumber="15" data-css="none_light"><span>弓</span></label>
-					<tr><td>選択肢2/2P<td>
-						<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="21" data-css="none_light"><span>片手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="22" data-css="none_light"><span>両手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="23" data-css="none_light"><span>長柄武器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="24" data-css="none_light"><span>法器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="B" data-dll-opt-weaponnumber="25" data-css="none_light"><span>弓</span></label>
-					<tr><td>選択肢3/3P<td>
-						<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="31" data-css="none_light"><span>片手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="32" data-css="none_light"><span>両手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="33" data-css="none_light"><span>長柄武器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="34" data-css="none_light"><span>法器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="C" data-dll-opt-weaponnumber="35" data-css="none_light"><span>弓</span></label>
-					<tr><td>選択肢4/4P<td>
-						<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="41" data-css="none_light"><span>片手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="42" data-css="none_light"><span>両手剣</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="43" data-css="none_light"><span>長柄武器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="44" data-css="none_light"><span>法器</span></label>
-						<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="45" data-css="none_light"><span>弓</span></label>
-				</table>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_Weapon" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_WeaponResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
-				</div>
-			</div>
-		</div>
-		<div class="DraftLocalLegend_lottery">
-			<div>
-				<div style="margin:1rem;text-align:center;">元素反応抽選機</div>
-				<table style="margin:auto;border:none;overflow:scroll;width:auto;">
-					<colgroup>
-						<col style="width:70px;">
-						<col style="width:70px;">
-						<col style="width:70px;">
-						<col style="width:70px;">
-						<col style="width:70px;">
-					</colgroup>
-					<tr><td><label><input type="checkbox" data-dll-opt-reaction="electroswirl"        class="electroswirl"       ><span style="width:calc(100% - 16px);text-wrap:wrap;">雷拡散  </span></label>
-					    <td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="hydroswirl"          class="hydroswirl"         ><span style="width:calc(100% - 16px);text-wrap:wrap;">水拡散  </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="pyroswirl"           class="pyroswirl"          ><span style="width:calc(100% - 16px);text-wrap:wrap;">炎拡散  </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="cryoswirl"           class="cryoswirl"          ><span style="width:calc(100% - 16px);text-wrap:wrap;">氷拡散  </span></label>
-					<tr><td><label><input type="checkbox" data-dll-opt-reaction="electrocrystallise"  class="electrocrystallise" ><span style="width:calc(100% - 16px);text-wrap:wrap;">雷結晶化</span></label>
-					    <td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="hydrocrystallise"    class="hydrocrystallise"   ><span style="width:calc(100% - 16px);text-wrap:wrap;">水結晶化</span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="pyrocrystallise"     class="pyrocrystallise"    ><span style="width:calc(100% - 16px);text-wrap:wrap;">炎結晶化</span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="cryocrystallise"     class="cryocrystallise"    ><span style="width:calc(100% - 16px);text-wrap:wrap;">氷結晶化</span></label>
-					<tr><td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="catalyze"            class="catalyze"           ><span style="width:calc(100% - 16px);text-wrap:wrap;">激化    </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="electrocharged"      class="electrocharged"     ><span style="width:calc(100% - 16px);text-wrap:wrap;">感電    </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="overloaded"          class="overloaded"         ><span style="width:calc(100% - 16px);text-wrap:wrap;">過負荷  </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="superconduct"        class="superconduct"       ><span style="width:calc(100% - 16px);text-wrap:wrap;">超電導  </span></label>
-					<tr><td>
-					    <td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="bloom"               class="bloom"              ><span style="width:calc(100% - 16px);text-wrap:wrap;">開花    </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="burning"             class="burning"            ><span style="width:calc(100% - 16px);text-wrap:wrap;">燃焼    </span></label>
-					    <td>
-					<tr><td>
-					    <td>
-					    <td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="vaporise"            class="vaporise"           ><span style="width:calc(100% - 16px);text-wrap:wrap;">蒸発    </span></label>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="frozen"              class="frozen"             ><span style="width:calc(100% - 16px);text-wrap:wrap;">凍結    </span></label>
-					<tr><td>
-					    <td>
-					    <td>
-					    <td>
-					    <td><label><input type="checkbox" data-dll-opt-reaction="melt"                class="melt"               ><span style="width:calc(100% - 16px);text-wrap:wrap;">溶解    </span></label>
-				</table>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_ElementalReaction" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_ElementalReactionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
-				</div>
-			</div>
-			<div>
-				<div style="margin:1rem;text-align:center;">国別抽選機</div>
-				<table border="1" style="margin:auto;">
-					<tr><td>選択肢1/1P<td>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="11" data-css="Mondstadt_light"><span>モンド</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="12" data-css="Liyue_light"    ><span>璃月</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="13" data-css="Inazuma_light"  ><span>稲妻</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="14" data-css="Sumeru_light"   ><span>スメール</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="15" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="16" data-css="Natlan_light"   ><span>ナタ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="17" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="18" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="A" data-dll-opt-regionnumber="19" data-css="none_light"     ><span>外の世界</span></label>
-					<tr><td>選択肢2/2P<td>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="21" data-css="Mondstadt_light"><span>モンド</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="22" data-css="Liyue_light"    ><span>璃月</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="23" data-css="Inazuma_light"  ><span>稲妻</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="24" data-css="Sumeru_light"   ><span>スメール</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="25" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="26" data-css="Natlan_light"   ><span>ナタ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="27" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="28" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="B" data-dll-opt-regionnumber="29" data-css="none_light"     ><span>外の世界</span></label>
-					<tr><td>選択肢3/3P<td>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="31" data-css="Mondstadt_light"><span>モンド</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="32" data-css="Liyue_light"    ><span>璃月</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="33" data-css="Inazuma_light"  ><span>稲妻</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="34" data-css="Sumeru_light"   ><span>スメール</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="35" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="36" data-css="Natlan_light"   ><span>ナタ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="37" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="38" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="C" data-dll-opt-regionnumber="39" data-css="none_light"     ><span>外の世界</span></label>
-					<tr><td>選択肢4/4P<td>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="41" data-css="Mondstadt_light"><span>モンド</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="42" data-css="Liyue_light"    ><span>璃月</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="43" data-css="Inazuma_light"  ><span>稲妻</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="44" data-css="Sumeru_light"   ><span>スメール</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="45" data-css="Fontaine_light" ><span>フォンテーヌ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="46" data-css="Natlan_light"   ><span>ナタ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="47" data-css="NodKrai_light"  ><span>ナド・クライ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="48" data-css="Snezhnaya_light"><span>スネージナヤ</span></label>
-						<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="49" data-css="none_light"     ><span>外の世界</span></label>
-				</table>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_Region" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_RegionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
-				</div>
-			</div>
-		</div>
-		<div class="DraftLocalLegend_lottery">
-			<div>
-				<div style="margin:1rem;text-align:center;">誕生日抽選機</div>
-				<div style="margin:1rem;text-align:center;">
-					<input type="number" id="DraftLocalLegend_BirthMDice" style="width:40px;" value="2"> d12 / 
-					<input type="number" id="DraftLocalLegend_BirthDDice" style="width:40px;" value="5"> d31
-				</div>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_Birth" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<div id="DraftLocalLegend_BirthResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
-				</div>
-			</div>
-		</div>
-	</details>
+/* ▼オプションの開閉に伴う開閉ボタンの位置変動と表示内容変更 */
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                                                           {position:fixed;top:5%    ;right:0     ;background:#eeed;border:1px #aaa;border-style:solid none solid solid;padding:0.5rem;letter-spacing:20%;writing-mode:vertical-rl  ;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked)                                     {position:fixed;top:0.5rem;right:1.5rem;background:#eeed;border:1px #aaa;border-style:solid                 ;padding:0.5rem;letter-spacing: 0 ;writing-mode:horizontal-tb;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                         p:nth-of-type(1)                  {margin:0;display:block;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                         p:nth-of-type(2)                  {margin:0;display:none;}
+div#DraftLocalLegend                                              input.DraftLocalLegend_optionToggleInput:checked  ~ p:nth-of-type(1)                  {margin:0;display:none;}
+div#DraftLocalLegend                                              input.DraftLocalLegend_optionToggleInput:checked  ~ p:nth-of-type(2)                  {margin:0;display:block;}
 
-	<details>
-		<summary>ノーマルモード用復活抽選機 ・コスト抽選機</summary>
-		<div style="margin:1rem;padding:1rem;position:relative;">
-			<button class="help-button" data-help-id="help1" style="position:absolute;top:0.5rem;right:0.5rem;">？</button>
-			<div id="help1" class="help-popup">
-				<p>◆復活コストについて</p>
-				<p>復活コスト1で、ランダムに選ばれたキャラクター1体を【使用済(戦闘不能)→使用済(生存)】または【使用済(生存)→未使用】に変更します</p>
-				<p>復活コストを2以上に設定する場合、同じキャラクターが2回選ばれる場合があります</p>
-				<p>星4キャラクターの即復活ボタンにチェックを入れると、星4キャラクターに限り復活コスト1で【使用済(戦闘不能)→未使用】または【使用済(生存)→未使用】にします</p>
-				<p>復活コストを負の値に設定すると、ランダムに選ばれたキャラクターを使用済に変更します</p>
+/* ▼オプションの開閉に伴うreadyThinkingの位置変動 */
+div#DraftLocalLegend                                                                                                  div.DraftLocalLegend_readyThinking{position:sticky;top:0 ;right:   0  ;width:     100%         ;min-width:100%;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked) ~ div.DraftLocalLegend_readyThinking{position:sticky;top:0 ;right: 500px;width:calc(100% - 500px);min-width:calc(100% - 500px + (100vw - 1014px) / 2);}
 
-			</div>
-			<div style="font-size:1.5rem;text-align:center;">
-				復活コスト：<input type="number" id="DraftLocalLegend_CharacterRechargeNormalCost" style="width:40px;" value="5">
-				 / 
-				星5即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR5">
-				 / 
-				星4即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR4">
-				<input type="button" value="抽選" id="DraftLocalLegend_CharacterRechargeNormal" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-			</div>
-			<div id="DraftLocalLegend_CharacterRechargeResultNormal"></div>
-		</div>
-	</details>
+/* ▼オプションの開閉に伴うオプション本体の位置変動 */
+div#DraftLocalLegend                                                                                                  div.DraftLocalLegend_option       {position:fixed ;top:0 ;right:-500px;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked) ~ div.DraftLocalLegend_option       {position:fixed ;       right:   0  ;}
+</style>
 
-	<details>
-		<summary>エンドレスモード用復活抽選機</summary>
-		<div style="margin:1rem;padding:1rem;">
-			<div style="text-align:center;">
-				生存率が <input type="number" id="DraftLocalLegend_CharacterRechargeEndlessA" style="width:40px;" value="80"> %のとき、
-				<input type="number" id="DraftLocalLegend_CharacterRechargeEndlessB" style="width:40px;" value="4"> コスト復活させる。<br>
-				生存率が <input type="number" id="DraftLocalLegend_CharacterRechargeEndlessC" style="width:40px;" value="20"> %のとき、
-				<input type="number" id="DraftLocalLegend_CharacterRechargeEndlessD" style="width:40px;" value="32"> コスト復活させる。<br><br>
-				※中間の数値は指数関数的に処理されます
-			</div>
-			<div style="font-size:1.5rem;text-align:center;">
-				生存率： <span id="DraftLocalLegend_proportion1"></span> / <span id="DraftLocalLegend_proportion2"></span> ( <span id="DraftLocalLegend_percentage"></span> )
-				復活コスト：<span id="DraftLocalLegend_CharacterRechargeCostEndless"></span>
-				<input type="button" value="抽選" id="DraftLocalLegend_CharacterRechargeEndless" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-			</div>
-			<div id="DraftLocalLegend_CharacterRechargeResultEndless"></div>
-		</div>
-	</details>
 
-	<details>
-		<summary>その他</summary>
-		<div class="DraftLocalLegend_lottery">
-			<div>
-				<button class="help-button" data-help-id="help2">？</button>
-				<div id="help2" class="help-popup">
-					<p>エンドレスモードなど、一部のキャラクターが使えない状態のセーブデータから始めたい場合は、この生成機を使用してセーブデータを生成してください</p>
-				</div>
-				<div style="margin:1rem;text-align:center;">セーブデータ自動生成機</div>
-				<div style="text-align:center;margin:auto;">
-					<div style="text-align:right;display:inline-block;">
-						<div>
-							<span>未使用の比率：</span>
-							<input type="number" id="DraftLocalLegend_SaveDataCreateZero" value="6" style="width:40px;">
-						</div>
-						<div>
-							<span>使用済(生存)の比率：</span>
-							<input type="number" id="DraftLocalLegend_SaveDataCreateOne" value="2" style="width:40px;">
-						</div>
-						<div>
-							<span>使用済(戦闘不能)の比率：</span>
-							<input type="number" id="DraftLocalLegend_SaveDataCreateTwo" value="1" style="width:40px;">
-						</div>
-					</div>
-				</div>
-				<div style="display:flex;">
-					<input type="button" id="DraftLocalLegend_SaveDataCreate" value="作成" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<input type="text" id="DraftLocalLegend_SaveDataCreateResult" readonly style="width:calc(100% - 80px - 3rem);margin:0.75rem 1rem 1rem 0;">
-				</div>
-			</div>
-		</div>
-		<div class="DraftLocalLegend_lottery">
-			<div style="width:90%;max-width:90%;">
-				<div style="margin:1rem;text-align:center;">カスタムキャラクターリスト用コード生成機</div>
-				<table border="1" style="margin:0 1rem;">
-					<tr><td class="background-Mondstadt"><div class="characterlist_anemo   customcharacterlist"></div>
-					<tr><td class="background-Liyue"    ><div class="characterlist_geo     customcharacterlist"></div>
-					<tr><td class="background-Inazuma"  ><div class="characterlist_electro customcharacterlist"></div>
-					<tr><td class="background-Sumeru"   ><div class="characterlist_dendro  customcharacterlist"></div>
-					<tr><td class="background-Fontaine" ><div class="characterlist_hydro   customcharacterlist"></div>
-					<tr><td class="background-Natlan"   ><div class="characterlist_pyro    customcharacterlist"></div>
-					<tr><td class="background-Snezhnaya"><div class="characterlist_cryo    customcharacterlist"></div>
-					<tr><td class="background-none"     ><div class="characterlist_none    customcharacterlist"></div>
-				</table>
-				<div style="padding:1rem 0;">
-					<input type="button" id="DraftLocalLegend_InBtCharacterpick" value="インポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<input type="text" id="DraftLocalLegend_InTeCharacterpick" style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 1rem 1rem 0;">
-					<input type="button" id="DraftLocalLegend_ExBtCharacterpick" value="エクスポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-					<input type="text" id="DraftLocalLegend_ExTeCharacterpick" readonly style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 1rem 1rem 0;">
-				</div>
-			</div>
-		</div>
-	</details>
 </div>
 
 <!--######完全ランダムボスバトル#####################################################################################################################################################################-->
@@ -1078,6 +1090,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 
 	<div style="max-width:400px;margin:3rem auto auto;">
 		<div style="background:#444;color:#fff;padding:0.5rem;font-size:1.5rem;font-weight:bold;text-align:center;">バックアップ復元</div>
+		<div style="margin:0.5rem;text-align:center;">ドラフト地方伝説のマイリストなど、ユーザーが入力した情報が意図せず消去・変更されていた場合、ここから復元することができます</div>
 		<div style="margin:0.5rem;text-align:center;">
 			<select name="recovery_date" id="recovery_date" style="width:380px;margin:1rem auto;">
 				<option value="">復元する日時を選んでください</option>
@@ -1630,14 +1643,14 @@ function NoMapRace_renderRoot(NMR_customplaylist) {
   const CATEGORY_ORDER = ["キャサリン","七天神像","週ボス/フィールドボス","その他"];
 
   // ▼全選択／全解除checkboxを生成する
-  const buildAllSelect = (area_en, mode, region_en) => {
+  const buildAllSelect = (area_ja, mode, region_en) => {
     const div = document.createElement("div");
     const label = document.createElement("label");
     const input = document.createElement("input");
     const span = document.createElement("span");
 
     input.type = "checkbox";
-    input.dataset.allselect = `NMR_${area_en}_${mode}`;
+    input.dataset.allselect = `NMR_${area_ja}_${mode}`;
     input.dataset.region_en = region_en;
 
     span.innerHTML = `<span class="sp">◆</span>全選択／全解除`;
@@ -1661,19 +1674,19 @@ function NoMapRace_renderRoot(NMR_customplaylist) {
     return Number(a.general_id) - Number(b.general_id);
   });
 
-  // ▼area_enごとにグループ化
+  // ▼area_jaごとにグループ化
   const areaMap = new Map();
   for (const row of filteredRows) {
     if (!row) continue;
-    if (!areaMap.has(row.area_en)) areaMap.set(row.area_en, []);
-    areaMap.get(row.area_en).push(row);
+    if (!areaMap.has(row.area_ja)) areaMap.set(row.area_ja, []);
+    areaMap.get(row.area_ja).push(row);
   }
 
   const areas = Array.from(areaMap.entries());
   let prevRegion = null;
 
   for (let i = 0; i < areas.length; i++) {
-    const [area_en, rows] = areas[i];
+    const [area_ja, rows] = areas[i];
     if (!rows?.length) continue;
 
     const region_en = rows[0]?.region_en;
@@ -1692,7 +1705,7 @@ function NoMapRace_renderRoot(NMR_customplaylist) {
       wrap.className = `background-${region_en}`;
 
       // ▼全選択／全解除checkboxのDOMを生成する
-      wrap.append(buildAllSelect(area_en, mode, region_en));
+      wrap.append(buildAllSelect(area_ja, mode, region_en));
 
       const grouped = new Map();
 
@@ -1718,7 +1731,7 @@ function NoMapRace_renderRoot(NMR_customplaylist) {
           const span = document.createElement("span");
 
           input.type = "checkbox";
-          input.dataset.allselect = `NMR_${area_en}_${mode}`;
+          input.dataset.allselect = `NMR_${area_ja}_${mode}`;
           input.dataset.region_ja = row.region_ja;
           input.dataset.region_en = row.region_en;
           input.dataset.area_ja = row.area_ja;
@@ -1889,14 +1902,14 @@ function JoinGame_renderRoot(JG_customplaylist) {
   const CATEGORY_ORDER = ["七天神像", "秘境", "その他"];
 
   // ▼全選択／全解除
-  const buildAllSelect = (area_en, region_en) => {
+  const buildAllSelect = (area_ja, region_en) => {
     const div = document.createElement("div");
     const label = document.createElement("label");
     const input = document.createElement("input");
     const span = document.createElement("span");
 
     input.type = "checkbox";
-    input.dataset.allselect = `JG_${area_en}`;
+    input.dataset.allselect = `JG_${area_ja}`;
     input.dataset.region_en = region_en;
 
     span.innerHTML = `<span class="sp">◆</span>全選択／全解除`;
@@ -1922,8 +1935,8 @@ function JoinGame_renderRoot(JG_customplaylist) {
     if (!row) continue;
 
     const region_en = row.region_en;
-    const area_en = row.area_en;
-    if (!region_en || !area_en) continue;
+    const area_ja = row.area_ja;
+    if (!region_en || !area_ja) continue;
 
     if (!regionMap.has(region_en)) {
       regionMap.set(region_en, new Map());
@@ -1931,24 +1944,24 @@ function JoinGame_renderRoot(JG_customplaylist) {
 
     const areaMap = regionMap.get(region_en);
 
-    if (!areaMap.has(area_en)) {
-      areaMap.set(area_en, []);
+    if (!areaMap.has(area_ja)) {
+      areaMap.set(area_ja, []);
     }
 
-    areaMap.get(area_en).push(row);
+    areaMap.get(area_ja).push(row);
   }
 
   // ▼描画
   for (const [region_en, areaMap] of regionMap.entries()) {
     root.append(createPC());
 
-    for (const [area_en, areaRows] of areaMap.entries()) {
+    for (const [area_ja, areaRows] of areaMap.entries()) {
       if (!areaRows.length) continue;
 
       const wrap = document.createElement("div");
       wrap.className = `background-${region_en}`;
 
-      wrap.append(buildAllSelect(area_en, region_en));
+      wrap.append(buildAllSelect(area_ja, region_en));
 
       const grouped = new Map();
 
@@ -1972,7 +1985,7 @@ function JoinGame_renderRoot(JG_customplaylist) {
           const span = document.createElement("span");
 
           input.type = "checkbox";
-          input.dataset.allselect = `JG_${area_en}`;
+          input.dataset.allselect = `JG_${area_ja}`;
           input.dataset.region_ja = row.region_ja;
           input.dataset.region_en = row.region_en;
           input.dataset.area_ja = row.area_ja;
@@ -2244,16 +2257,16 @@ function DraftLocalLegend_renderEnemyLists(DraftLocalLegend_root) {
     (a, b) => Number(a.general_id) - Number(b.general_id)
   );
 
-  // ▼area_enごとにグループ化
+  // ▼area_jaごとにグループ化
   const areaMap = new Map();
 
   for (const row of DraftLocalLegend_root) {
 
-    if (!areaMap.has(row.area_en)) {
-      areaMap.set(row.area_en, []);
+    if (!areaMap.has(row.area_ja)) {
+      areaMap.set(row.area_ja, []);
     }
 
-    areaMap.get(row.area_en).push(row);
+    areaMap.get(row.area_ja).push(row);
   }
 
   // ▼描画
@@ -2475,6 +2488,18 @@ export async function DraftLocalLegend_maskrunLottery() {
       div.classList.remove('masked');
       div.classList.add('revealed');
 
+      // ▼戦闘準備の更新
+      await update(ref(database, "DraftLocalLegend/option/ready/checkbox"), {
+        11: false, 12: false, 13: false, 14: false,
+        21: false, 22: false, 23: false, 24: false
+      });
+
+      await set(
+        ref(database, "DraftLocalLegend/option/ready/thinkingtimer"),
+        Date.now()
+      );
+
+      // ▼現在の生存状態を取得して保存用データに変換する
       const statusSnap = await get(ref(database, "DraftLocalLegend/character_statuses"));
       const currentStatusMap = statusSnap.val() ?? {};
       const result = buildSaveData(currentStatusMap);
@@ -2637,15 +2662,12 @@ function DraftLocalLegend_updateDetailVisibility() {
     const detailSpan = label.querySelector('span > span');
     if (!detailSpan) return;
 
-    detailSpan.style.display = showDetail ? '' : 'none';
+    detailSpan.style.display = showDetail ? 'inline' : '';
   });
 }
 
 // ▼チェックボックスが変更されたときに反映
 DraftLocalLegend_detailToggle.addEventListener('change', DraftLocalLegend_updateDetailVisibility);
-
-// ▼初期表示で適用
-DraftLocalLegend_updateDetailVisibility();
 
 // #######DraftLocalLegend_キャラクター詳細情報の表示・非表示切替#######################################################################################################################################
 // #####################################################################################################################################################################################################
@@ -3339,6 +3361,79 @@ document.getElementById('DraftLocalLegend_exportStatus')
 
 // #######DraftLocalLegend_セーブデータのインポートとエクスポート#######################################################################################################################################
 // #####################################################################################################################################################################################################
+// #######DraftLocalLegend_戦闘準備#####################################################################################################################################################################
+
+// ▼DOM要素
+const readyCheckboxes = document.querySelectorAll('input[data-dll-opt-status]');
+
+// ▼キャラクター選択・準備完了チェックボックスの状態をFirebaseに保存&リアルタイム反映
+readyCheckboxes.forEach(cb => {
+  const status = cb.dataset.dllOptStatus;
+  const databaseRef = ref(database, `DraftLocalLegend/option/ready/checkbox/${status}`);
+
+  cb.addEventListener('change', () => {
+    set(databaseRef, cb.checked);
+  });
+
+  onValue(databaseRef, snapshot => {
+    cb.checked = !!snapshot.val();
+  });
+});
+
+// ▼DraftLocalLegend/option/ready/thinkingtimerをもとに4分タイマーの起動
+const thinkingTimerRef = ref(
+  database,
+  "DraftLocalLegend/option/ready/thinkingtimer"
+);
+
+let thinkingTimerInterval = null;
+
+onValue(thinkingTimerRef, snapshot => {
+  const startTime = Number(snapshot.val());
+  const timerElement = document.getElementById(
+    "DraftLocalLegend_ReadyThinkingTimer"
+  );
+
+  if (!timerElement) return;
+
+  // ▼既存のタイマーを停止
+  if (thinkingTimerInterval !== null) {
+    clearInterval(thinkingTimerInterval);
+    thinkingTimerInterval = null;
+  }
+
+  if (!startTime) {
+    timerElement.textContent = "0:00";
+    return;
+  }
+
+  // ▼最新のthinkingtimerを基準に終了時刻を設定
+  const endTime = startTime + 4 * 60 * 1000;
+
+  const updateTimer = () => {
+    const remaining = Math.max(0, endTime - Date.now());
+    const totalSeconds = Math.ceil(remaining / 1000);
+
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    timerElement.textContent =
+      `${minutes}:${String(seconds).padStart(2, "0")}`;
+
+    if (remaining <= 0) {
+      clearInterval(thinkingTimerInterval);
+      thinkingTimerInterval = null;
+    }
+  };
+
+  updateTimer();
+  thinkingTimerInterval = setInterval(updateTimer, 250);
+});
+
+// ◆テキストエディタ処理◆ >
+
+// #######DraftLocalLegend_戦闘準備#####################################################################################################################################################################
+// #####################################################################################################################################################################################################
 // #######DraftLocalLegend_キャラクター重複回避用抽選機#################################################################################################################################################
 
 // ▼DOM参照
@@ -3823,6 +3918,84 @@ onValue(ref(database, 'DraftLocalLegend/option/birth-m/result'), snapshot => {
 
 // #######DraftLocalLegend_誕生日抽選機#################################################################################################################################################################
 // #####################################################################################################################################################################################################
+// #######DraftLocalLegend_タイマー#####################################################################################################################################################################
+
+const DraftLocalLegend_TimerToggle = document.getElementById("DraftLocalLegend_TimerToggle");
+const DraftLocalLegend_Timer = document.getElementById("DraftLocalLegend_Timer");
+const DraftLocalLegend_TimerRef = ref(database, "DraftLocalLegend/option/timer/starttime");
+
+let DraftLocalLegend_TimerInterval = null;
+
+function DraftLocalLegend_UpdateTimer(DraftLocalLegend_startTime) {
+  const DraftLocalLegend_elapsed = Date.now() - DraftLocalLegend_startTime;
+  const DraftLocalLegend_time = DraftLocalLegend_elapsed - 5000;
+
+  // ▼60分に到達したら停止
+  if (DraftLocalLegend_time >= 3600000) {
+    DraftLocalLegend_Timer.textContent = "60:00:000";
+    clearInterval(DraftLocalLegend_TimerInterval);
+    DraftLocalLegend_TimerInterval = null;
+    return;
+  }
+
+  // ▼-5秒～0秒はマイナス表示
+  const DraftLocalLegend_negative = DraftLocalLegend_time < 0;
+  const DraftLocalLegend_absTime = Math.abs(DraftLocalLegend_time);
+
+  const DraftLocalLegend_minutes = Math.floor(DraftLocalLegend_absTime / 60000);
+  const DraftLocalLegend_seconds = Math.floor((DraftLocalLegend_absTime % 60000) / 1000);
+  const DraftLocalLegend_milliseconds = DraftLocalLegend_absTime % 1000;
+
+  DraftLocalLegend_Timer.textContent =
+    (DraftLocalLegend_negative ? "-" : "") +
+    String(DraftLocalLegend_minutes).padStart(2, "0") + ":" +
+    String(DraftLocalLegend_seconds).padStart(2, "0") + ":" +
+    String(DraftLocalLegend_milliseconds).padStart(3, "0");
+}
+
+function DraftLocalLegend_StartTimer(DraftLocalLegend_startTime) {
+  clearInterval(DraftLocalLegend_TimerInterval);
+
+  DraftLocalLegend_UpdateTimer(DraftLocalLegend_startTime);
+
+  DraftLocalLegend_TimerInterval = setInterval(() => {
+    DraftLocalLegend_UpdateTimer(DraftLocalLegend_startTime);
+  }, 10);
+}
+
+// ▼ボタン押下時に開始時刻をFirebaseへ保存
+DraftLocalLegend_TimerToggle.addEventListener("click", () => {
+  set(DraftLocalLegend_TimerRef, Date.now());
+});
+
+// ▼Firebaseの開始時刻を全クライアントで共有
+onValue(DraftLocalLegend_TimerRef, DraftLocalLegend_snapshot => {
+  const DraftLocalLegend_startTime = DraftLocalLegend_snapshot.val();
+  if (!DraftLocalLegend_startTime) return;
+
+  DraftLocalLegend_StartTimer(DraftLocalLegend_startTime);
+});
+
+// ▼タイマーメモのFirebase参照
+const DraftLocalLegend_TimerMemo = document.getElementById("DraftLocalLegend_TimerMemo");
+const DraftLocalLegend_TimerMemoRef = ref(database, "DraftLocalLegend/option/timer/memo");
+
+// ▼メモ入力時にFirebaseへ保存
+DraftLocalLegend_TimerMemo.addEventListener("input", () => {
+  set(DraftLocalLegend_TimerMemoRef, DraftLocalLegend_TimerMemo.value);
+});
+
+// ▼Firebaseのメモをリアルタイム共有
+onValue(DraftLocalLegend_TimerMemoRef, DraftLocalLegend_snapshot => {
+  const DraftLocalLegend_memo = DraftLocalLegend_snapshot.val() ?? "";
+
+  if (DraftLocalLegend_TimerMemo.value !== DraftLocalLegend_memo) {
+    DraftLocalLegend_TimerMemo.value = DraftLocalLegend_memo;
+  }
+});
+
+// #######DraftLocalLegend_タイマー#####################################################################################################################################################################
+// #####################################################################################################################################################################################################
 // #######DraftLocalLegend_セーブデータ自動生成機#######################################################################################################################################################
 
 document.getElementById("DraftLocalLegend_SaveDataCreate").addEventListener("click", async () => {
@@ -3947,7 +4120,52 @@ createButton.addEventListener('click', () => {
 
 // #######DraftLocalLegend_カスタムキャラクターリスト用コード生成機#####################################################################################################################################
 // #####################################################################################################################################################################################################
-// #######DraftLocalLegend_ノーマルモード復活抽選機#####################################################################################################################################################
+// #######DraftLocalLegend_生存率計算###################################################################################################################################################################
+
+function updateProportionsEndless() {
+  // ▼空蛍ドールマイリスト対策：各キャラ最初に表示された一件だけのlabelを取得
+  const labels = Array.from(document.querySelectorAll('label[data-dll-status]'));
+  const characterMap = new Map();
+
+  labels.forEach(label => {
+    const charId = label.dataset.dllCharacter_id;
+    if (!characterMap.has(charId)) characterMap.set(charId, label);
+  });
+
+  // ▼コスト合計を算出
+  const proportion2 = characterMap.size * 2;
+
+  // ▼生存数の算出
+  let statusSum = 0;
+  characterMap.forEach(label => {
+    statusSum += parseInt(label.dataset.dllStatus, 10) || 0;
+  });
+  const proportion1 = proportion2 - statusSum;
+
+  // ▼生存率の算出
+  const percentage = proportion2 > 0 ? (proportion1 / proportion2 * 100) : 0;
+
+  // ▼DOMに反映
+  document.getElementById("DraftLocalLegend_proportion1").textContent = proportion1;
+  document.getElementById("DraftLocalLegend_proportion2").textContent = proportion2;
+  document.getElementById("DraftLocalLegend_percentage").textContent = percentage.toFixed(1) + "%";
+}
+
+// ▼ページ読み込み後に初期値を反映し、data-dll-statusの変更を監視
+window.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.querySelectorAll('label[data-dll-status]').forEach(label => {
+      const observer = new MutationObserver(updateProportionsEndless);
+      observer.observe(label, { attributes: true, attributeFilter: ["data-dll-status"] });
+    });
+
+    updateProportionsEndless();
+  }, 1000);
+});
+
+// #######DraftLocalLegend_生存率計算###################################################################################################################################################################
+// #####################################################################################################################################################################################################
+// #######DraftLocalLegend_コスト抽選機#################################################################################################################################################################
 
 function DraftLocalLegend_CharacterRechargeNormal() {
   const DraftLocalLegend_confirmed = confirm("キャラクターを復活または使用済みにしてよいですか？");
@@ -4066,181 +4284,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (DraftLocalLegend_btn) DraftLocalLegend_btn.addEventListener('click', DraftLocalLegend_CharacterRechargeNormal);
 });
 
-// #######DraftLocalLegend_ノーマルモード復活抽選機#####################################################################################################################################################
-// #####################################################################################################################################################################################################
-// #######DraftLocalLegend_エンドレスモード復活抽選機###################################################################################################################################################
-
-export function DraftLocalLegend_CharacterRechargeEndless() {
-  const DraftLocalLegend_confirmed = confirm("キャラクターを復活させてよいですか？");
-  if (!DraftLocalLegend_confirmed) return;
-
-  const DraftLocalLegend_costText = document.getElementById("DraftLocalLegend_CharacterRechargeCostEndless").textContent;
-  const DraftLocalLegend_cost = parseInt(DraftLocalLegend_costText, 10);
-  if (isNaN(DraftLocalLegend_cost) || DraftLocalLegend_cost <= 0) return;
-
-  const DraftLocalLegend_allLabels = Array.from(document.querySelectorAll('label[data-dll-status]'));
-  const DraftLocalLegend_characterMap = new Map();
-  DraftLocalLegend_allLabels.forEach(DraftLocalLegend_label => {
-    const DraftLocalLegend_charId = DraftLocalLegend_label.dataset.dllCharacter_id;
-    if (!DraftLocalLegend_characterMap.has(DraftLocalLegend_charId)) DraftLocalLegend_characterMap.set(DraftLocalLegend_charId, DraftLocalLegend_label);
-  });
-
-  const DraftLocalLegend_characterEntries = Array.from(DraftLocalLegend_characterMap.entries()).map(([DraftLocalLegend_charId, DraftLocalLegend_label]) => ({
-    charId: DraftLocalLegend_charId,
-    label: DraftLocalLegend_label,
-    status: parseInt(DraftLocalLegend_label.dataset.dllStatus, 10),
-    rarity: DraftLocalLegend_label.dataset.dllRarity || "5"
-  }));
-
-  let DraftLocalLegend_remainingCost = DraftLocalLegend_cost;
-  const DraftLocalLegend_logs = [];
-
-  while (DraftLocalLegend_remainingCost > 0) {
-    const DraftLocalLegend_reducible = DraftLocalLegend_characterEntries.filter(DraftLocalLegend_entry =>
-      DraftLocalLegend_entry.status > 0
-    );
-    if (DraftLocalLegend_reducible.length === 0) break;
-
-    const DraftLocalLegend_index = Math.floor(Math.random() * DraftLocalLegend_reducible.length);
-    const DraftLocalLegend_entry = DraftLocalLegend_reducible[DraftLocalLegend_index];
-    const DraftLocalLegend_oldStatus = DraftLocalLegend_entry.status;
-
-    const DraftLocalLegend_newStatus = Math.max(0, DraftLocalLegend_oldStatus - 1); // Endlessはrarity変化なし
-    DraftLocalLegend_entry.status = DraftLocalLegend_newStatus;
-
-    const DraftLocalLegend_allSameChar = document.querySelectorAll(`label[data-dll-character_id="${DraftLocalLegend_entry.charId}"]`);
-    DraftLocalLegend_allSameChar.forEach(DraftLocalLegend_label => DraftLocalLegend_label.dataset.dllStatus = DraftLocalLegend_newStatus);
-
-    // ▼Firebase反映
-    const DraftLocalLegend_charId3 = String(DraftLocalLegend_entry.charId).padStart(3, '0');
-    set(ref(database, `DraftLocalLegend/character_statuses/${DraftLocalLegend_charId3}`), DraftLocalLegend_newStatus.toString());
-
-    const DraftLocalLegend_name = DraftLocalLegend_entry.label.querySelector('span')?.firstChild?.textContent?.trim() ?? '不明';
-    let DraftLocalLegend_log = '';
-
-    if (DraftLocalLegend_oldStatus === 2 && DraftLocalLegend_newStatus === 1) DraftLocalLegend_log = `${DraftLocalLegend_name}を使用済(戦闘不能)から使用済(生存)に戻しました<br>`;
-    else if (DraftLocalLegend_oldStatus === 1 && DraftLocalLegend_newStatus === 0) DraftLocalLegend_log = `${DraftLocalLegend_name}を使用済(生存)から未使用に戻しました<br>`;
-
-    if (DraftLocalLegend_log) DraftLocalLegend_logs.push(DraftLocalLegend_log);
-    DraftLocalLegend_remainingCost--;
-  }
-
-  const DraftLocalLegend_resultText = DraftLocalLegend_logs.join('');
-  const DraftLocalLegend_resultElem = document.getElementById("DraftLocalLegend_CharacterRechargeResultEndless");
-  if (DraftLocalLegend_resultElem) DraftLocalLegend_resultElem.innerHTML = DraftLocalLegend_resultText;
-
-  set(ref(database, 'DraftLocalLegend/option/recharge_result_endless'), DraftLocalLegend_resultText);
-  updateProportionsAndCostEndless();
-}
-
-// ▼proportion/percentage計算+コスト算出
-function updateProportionsAndCostEndless() {
-  const DraftLocalLegend_allLabels = Array.from(document.querySelectorAll('label[data-dll-status]'));
-  const DraftLocalLegend_characterMap = new Map();
-  DraftLocalLegend_allLabels.forEach(DraftLocalLegend_label => {
-    const DraftLocalLegend_charId = DraftLocalLegend_label.dataset.dllCharacter_id;
-    if (!DraftLocalLegend_characterMap.has(DraftLocalLegend_charId)) DraftLocalLegend_characterMap.set(DraftLocalLegend_charId, DraftLocalLegend_label);
-  });
-
-  const DraftLocalLegend_proportion2 = DraftLocalLegend_characterMap.size * 2;
-  document.getElementById("DraftLocalLegend_proportion2").textContent = DraftLocalLegend_proportion2;
-
-  let DraftLocalLegend_statusSum = 0;
-  DraftLocalLegend_characterMap.forEach(DraftLocalLegend_label => {
-    DraftLocalLegend_statusSum += parseInt(DraftLocalLegend_label.dataset.dllStatus, 10);
-  });
-  const DraftLocalLegend_proportion1 = DraftLocalLegend_proportion2 - DraftLocalLegend_statusSum;
-  document.getElementById("DraftLocalLegend_proportion1").textContent = DraftLocalLegend_proportion1;
-
-  const DraftLocalLegend_percentage = (DraftLocalLegend_proportion2 > 0) ? (DraftLocalLegend_proportion1 / DraftLocalLegend_proportion2 * 100) : 0;
-  document.getElementById("DraftLocalLegend_percentage").textContent = DraftLocalLegend_percentage.toFixed(1) + "%";
-
-  // ▼ユーザー設定値を取得
-  const DraftLocalLegend_highRate = parseFloat(document.getElementById("DraftLocalLegend_CharacterRechargeEndlessA").value) || 80;
-  const DraftLocalLegend_highCost = parseFloat(document.getElementById("DraftLocalLegend_CharacterRechargeEndlessB").value) || 1;
-  const DraftLocalLegend_lowRate  = parseFloat(document.getElementById("DraftLocalLegend_CharacterRechargeEndlessC").value) || 20;
-  const DraftLocalLegend_lowCost  = parseFloat(document.getElementById("DraftLocalLegend_CharacterRechargeEndlessD").value) || 64;
-
-  // ▼コスト計算(指数関数)
-  let DraftLocalLegend_cost;
-  if (DraftLocalLegend_percentage >= DraftLocalLegend_highRate) DraftLocalLegend_cost = DraftLocalLegend_highCost;
-  else if (DraftLocalLegend_percentage <= DraftLocalLegend_lowRate) DraftLocalLegend_cost = DraftLocalLegend_lowCost;
-  else {
-    const DraftLocalLegend_exponent = (DraftLocalLegend_highRate - DraftLocalLegend_percentage) / (DraftLocalLegend_highRate - DraftLocalLegend_lowRate);
-    DraftLocalLegend_cost = Math.round(DraftLocalLegend_highCost * Math.pow(DraftLocalLegend_lowCost / DraftLocalLegend_highCost, DraftLocalLegend_exponent));
-  }
-
-  document.getElementById("DraftLocalLegend_CharacterRechargeCostEndless").textContent = DraftLocalLegend_cost;
-}
-
-// ▼data-dll-statusが変わったら自動反映
-const DraftLocalLegend_labels = document.querySelectorAll('label[data-dll-status]');
-DraftLocalLegend_labels.forEach(DraftLocalLegend_label => {
-  const DraftLocalLegend_observer = new MutationObserver(() => updateProportionsAndCostEndless());
-  DraftLocalLegend_observer.observe(DraftLocalLegend_label, { attributes: true, attributeFilter: ["data-dll-status"] });
-});
-
-// ▼inputの変更でリアルタイム更新
-[
-  "DraftLocalLegend_CharacterRechargeEndlessA",
-  "DraftLocalLegend_CharacterRechargeEndlessB",
-  "DraftLocalLegend_CharacterRechargeEndlessC",
-  "DraftLocalLegend_CharacterRechargeEndlessD"
-].forEach(DraftLocalLegend_id => {
-  const DraftLocalLegend_input = document.getElementById(DraftLocalLegend_id);
-  if (DraftLocalLegend_input) DraftLocalLegend_input.addEventListener('input', updateProportionsAndCostEndless);
-});
-
-updateProportionsAndCostEndless();
-
-// ▼復活情報リアルタイム共有
-onValue(ref(database, 'DraftLocalLegend/option/recharge_result_endless'), DraftLocalLegend_snapshot => {
-  const DraftLocalLegend_val = DraftLocalLegend_snapshot.val() ?? '';
-  const DraftLocalLegend_resultElem = document.getElementById("DraftLocalLegend_CharacterRechargeResultEndless");
-  if (DraftLocalLegend_resultElem) DraftLocalLegend_resultElem.innerHTML = DraftLocalLegend_val;
-});
-
-onValue(ref(database, 'DraftLocalLegend/character_statuses'), DraftLocalLegend_snapshot => {
-  const DraftLocalLegend_data = DraftLocalLegend_snapshot.val();
-  if (!DraftLocalLegend_data) return;
-
-  Object.entries(DraftLocalLegend_data).forEach(([DraftLocalLegend_key, DraftLocalLegend_value]) => {
-    if (DraftLocalLegend_key === 'recharge_result_endless') {
-      document.getElementById("DraftLocalLegend_CharacterRechargeResultEndless").innerHTML = DraftLocalLegend_value || "";
-      return;
-    }
-
-    const DraftLocalLegend_statusNum = parseInt(DraftLocalLegend_value, 10);
-    if (isNaN(DraftLocalLegend_statusNum)) return;
-
-    const DraftLocalLegend_charId3 = String(DraftLocalLegend_key).padStart(3, '0');
-    const DraftLocalLegend_labels2 = document.querySelectorAll(`label[data-dll-character_id="${DraftLocalLegend_charId3}"]`);
-    DraftLocalLegend_labels2.forEach(DraftLocalLegend_label => DraftLocalLegend_label.dataset.dllStatus = DraftLocalLegend_statusNum);
-  });
-  updateProportionsAndCostEndless();
-});
-
-// ▼ボタン発火設定
-window.addEventListener('DOMContentLoaded', () => {
-  const DraftLocalLegend_btn = document.getElementById("DraftLocalLegend_CharacterRechargeEndless");
-  if (DraftLocalLegend_btn) DraftLocalLegend_btn.addEventListener('click', DraftLocalLegend_CharacterRechargeEndless);
-});
-
-// ▼生存率の初期値が正常に表示されないので、ページ読み込み1秒後に値を-1+1することで強制的に再読み込みしている
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const DraftLocalLegend_input = document.getElementById("DraftLocalLegend_CharacterRechargeEndlessA");
-    if (!DraftLocalLegend_input) return;
-
-    DraftLocalLegend_input.value = Number(DraftLocalLegend_input.value) - 1;
-    DraftLocalLegend_input.dispatchEvent(new Event('input'));
-
-    DraftLocalLegend_input.value = Number(DraftLocalLegend_input.value) + 1;
-    DraftLocalLegend_input.dispatchEvent(new Event('input'));
-  }, 1000);
-});
-
-// #######DraftLocalLegend_エンドレスモード復活抽選機###################################################################################################################################################
+// #######DraftLocalLegend_コスト抽選機#################################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######customplaylistをもとにAllRandomBossBattle_rootをつくる########################################################################################################################################
 
@@ -5213,43 +5257,65 @@ try {
 
   const data = await response.json();
 
-  const characterlist = (data.character_sheet ?? []).map(v => ({
-    character_id         : v.character_id === "" ? "" : String(v.character_id).padStart(3, "0"),
-    installation_check   : v.installation_check ?? "",
-    name_ja              : v.name_ja ?? "",
-    element_en           : v.element_en ?? "",
-    rarity               : v.rarity ?? "",
-    weapon_en            : v.weapon_en ?? "",
-    teambouns_en         : v.teambouns_en ?? "",
-    region_en            : v.region_en ?? "",
-    birth_month          : v.birth_month === "" ? "" : String(v.birth_month).padStart(2, "0"),
-    birth_day            : v.birth_day === "" ? "" : String(v.birth_day).padStart(2, "0"),
-    characterlist_id     : v.characterlist_id ?? "",
-    selfaffected         : v.selfaffected ?? "",
-    region_regulation_en : v.region_regulation_en ?? ""
-  }));
+  const elementMap = {"風":"Anemo","岩":"Geo","雷":"Electro","草":"Dendro","水":"Hydro","炎":"Pyro","氷":"Cryo"};
+  const weaponMap = {"片手剣":"Sword","両手剣":"Claymore","長柄武器":"Polearm","法器":"Catalyst","弓":"Bow"};
+  const teambounsMap = {"月兆":"moonsign","魔導":"hexerei","星反応":"stellarreaction"};
+  const regoinMap = {"モンド":"Mondstadt","璃月":"Liyue","稲妻":"Inazuma","スメール":"Sumeru","フォンテーヌ":"Fontaine","ナタ":"Natlan","ナド・クライ":"NodKrai","スネージナヤ":"Snezhnaya","外の世界":"Outside"};
+  const regoinregulationMap = {"モンド":"Mondstadt","璃月":"Liyue","稲妻":"Inazuma","スメール":"Sumeru","フォンテーヌ":"Fontaine","ナタ":"Natlan","ナド・クライ":"NodKrai","スネージナヤ":"Snezhnaya","外の世界":"Outside"};
 
-  const customplaylist = (data.customplay_sheet ?? []).map(v => ({
-    general_id          : v.general_id === "" ? "" : String(v.general_id).padStart(4, "0"),
-    region_ja           : v.region_ja ?? "",
-    region_en           : v.region_en ?? "",
-    area_ja             : v.area_ja ?? "",
-    area_en             : v.area_en ?? "",
-    category_ja         : v.category_ja ?? "",
-    category_id         : v.category_id ?? "",
-    point_ja            : v.point_ja ?? "",
-    NoMapRace           : v.NoMapRace ?? "",
-    NMR_start_checked   : v.NMR_start_checked ?? "",
-    NMR_goal_checked    : v.NMR_goal_checked ?? "",
-    JoinGame            : v.JoinGame ?? "",
-    JG_checked          : v.JG_checked ?? "",
-    DraftLocalLegend    : v.DraftLocalLegend ?? "",
-    DLL_checked         : v.DLL_checked ?? "",
-    DLL_memo1           : v.DLL_memo1 ?? "",
-    DLL_memo2           : v.DLL_memo2 ?? "",
-    AllRandomBossBattle : v.AllRandomBossBattle ?? "",
-    ARBB_checked        : v.ARBB_checked ?? ""
-  }));
+  const characterlist = (data.character_sheet ?? []).map(v => {
+    const elementJa = v.element_ja ?? "";
+    const weaponJa = v.weapon_ja ?? "";
+    const teambounsJa = v.teambouns_ja ?? "";
+    const regionJa = v.region_ja ?? "";
+    const regionregulationJa = v.region_regulation_ja ?? "";
+
+    return {
+      character_id         : v.character_id === "" ? "" : String(v.character_id).padStart(3, "0"), 
+      installation_check   : v.installation_check ?? "", 
+      name_ja              : v.name_ja ?? "", 
+      element_ja           : elementJa,
+      element_en           : elementMap[elementJa] ?? "",
+      rarity               : v.rarity ?? "", 
+      weapon_ja            : weaponJa,
+      weapon_en            : weaponMap[weaponJa] ?? "",
+      teambouns_ja         : teambounsJa,
+      teambouns_en         : teambounsMap[teambounsJa] ?? "",
+      region_ja            : regionJa,
+      region_en            : regoinMap[regionJa] ?? "",
+      birth_month          : v.birth_month === "" ? "" : String(v.birth_month).padStart(2, "0"), 
+      birth_day            : v.birth_day === "" ? "" : String(v.birth_day).padStart(2, "0"), 
+      characterlist_id     : v.characterlist_id ?? "", 
+      selfaffected         : v.selfaffected ?? "", 
+      region_regulation_ja : regionregulationJa,
+      region_regulation_en : regoinregulationMap[regionregulationJa] ?? ""
+    };
+  });
+
+  const customplaylist = (data.customplay_sheet ?? []).map(v => {
+    const regionJa = v.region_ja ?? "";
+
+    return {
+      general_id          : v.general_id === "" ? "" : String(v.general_id).padStart(4, "0"),
+      region_ja           : regionJa,
+      region_en           : regoinMap[regionJa] ?? "",
+      area_ja             : v.area_ja ?? "",
+      category_ja         : v.category_ja ?? "",
+      category_id         : v.category_id ?? "",
+      point_ja            : v.point_ja ?? "",
+      NoMapRace           : v.NoMapRace ?? "",
+      NMR_start_checked   : v.NMR_start_checked ?? "",
+      NMR_goal_checked    : v.NMR_goal_checked ?? "",
+      JoinGame            : v.JoinGame ?? "",
+      JG_checked          : v.JG_checked ?? "",
+      DraftLocalLegend    : v.DraftLocalLegend ?? "",
+      DLL_checked         : v.DLL_checked ?? "",
+      DLL_memo1           : v.DLL_memo1 ?? "",
+      DLL_memo2           : v.DLL_memo2 ?? "",
+      AllRandomBossBattle : v.AllRandomBossBattle ?? "",
+      ARBB_checked        : v.ARBB_checked ?? ""
+    };
+  });
 
   // ▼現時点でのDatabase内容を取得
   const characterSnap = await get(ref(database, "Database/characterlist"));
@@ -5290,6 +5356,15 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.6.0<span>2026/10/09</span></div>
+	<div class="details">
+		<p>トワリンマルチの会データベースから取得する情報を効率化しました</p>
+		<p>【ドラフト地方伝説】各プレイヤーの準備状態を共有する欄を追加しました</p>
+		<p>【ドラフト地方伝説】オプション全体を画面右側に格納しました</p>
+		<p>【ドラフト地方伝説】オプションにタイマーを追加しました</p>
+		<p>その他、軽微な変更・修正をしました</p>
+	</div>
 
 	<div class="version">v2.5.0<span>2026/08/27</span></div>
 	<div class="details">
