@@ -149,13 +149,45 @@ div#JoinGame div.JoinGame_pointlist > div > div{border-bottom:1px solid #888;}
 }
 
 /*▼▼▼ドラフト地方伝説▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼*/
-div#DraftLocalLegend #DraftLocalLegend_enemylists > div{border-bottom:1px solid #aaa;}
+#DraftLocalLegend .DraftLocalLegend_enemylist div{border-bottom:1px solid #888;text-align:center;}
+
+/* ▼leftmenu・rightmenu共有 */
+div#DraftLocalLegend div.DraftLocalLegend_leftmenu  details,
+div#DraftLocalLegend div.DraftLocalLegend_rightmenu details{background:#eee;position:relative;border:1px solid #aaa;margin:1rem 0;}
+div#DraftLocalLegend div.DraftLocalLegend_leftmenu  summary,
+div#DraftLocalLegend div.DraftLocalLegend_rightmenu summary{background:#444;color:#fff;padding-right:2rem;}
+div#DraftLocalLegend div.DraftLocalLegend_leftmenu  button.help-button,
+div#DraftLocalLegend div.DraftLocalLegend_rightmenu button.help-button{position:absolute;top:0.25rem;right:0.25rem;}
+
+/* ▼leftmenuの開閉に伴う開閉ボタンの位置変動と表示内容変更 */
+div#DraftLocalLegend label.DraftLocalLegend_leftmenu                                                                                {position:fixed;top:5%  ;left:0     ;background:#eeed;border:1px #aaa;border-style:solid solid solid none;padding:0.5rem;letter-spacing:20%;writing-mode:vertical-rl  ;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_leftmenu:has(input.DraftLocalLegend_leftmenu:checked)                                   {position:fixed;         left:0.5rem;background:#eeed;border:1px #aaa;border-style:solid                 ;padding:0.5rem;letter-spacing: 0 ;writing-mode:horizontal-tb;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_leftmenu                                                p:nth-of-type(1)                {margin:0;display:block;}
+div#DraftLocalLegend label.DraftLocalLegend_leftmenu                                                p:nth-of-type(2)                {margin:0;display:none;}
+div#DraftLocalLegend                                     input.DraftLocalLegend_leftmenu:checked  ~ p:nth-of-type(1)                {margin:0;display:none;}
+div#DraftLocalLegend                                     input.DraftLocalLegend_leftmenu:checked  ~ p:nth-of-type(2)                {margin:0;display:block;}
+
+/* ▼leftmenuの開閉に伴うオプション本体の位置変動 */
+div#DraftLocalLegend                                                                                div.DraftLocalLegend_leftmenu   {position:fixed;bottom:0;left:-50%;}
+div#DraftLocalLegend label.DraftLocalLegend_leftmenu:has(input.DraftLocalLegend_leftmenu:checked) ~ div.DraftLocalLegend_leftmenu   {position:fixed;         left:  0 ;}
+
+/* ▼rightmenuの開閉に伴う開閉ボタンの位置変動と表示内容変更 */
+div#DraftLocalLegend label.DraftLocalLegend_rightmenu                                                                               {position:fixed;top:5%  ;right:0     ;background:#eeed;border:1px #aaa;border-style:solid none solid solid;padding:0.5rem;letter-spacing:20%;writing-mode:vertical-rl  ;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_rightmenu:has(input.DraftLocalLegend_rightmenu:checked)                                 {position:fixed;         right:1.5rem;background:#eeed;border:1px #aaa;border-style:solid                 ;padding:0.5rem;letter-spacing: 0 ;writing-mode:horizontal-tb;z-index:999;}
+div#DraftLocalLegend label.DraftLocalLegend_rightmenu                                                 p:nth-of-type(1)              {margin:0;display:block;}
+div#DraftLocalLegend label.DraftLocalLegend_rightmenu                                                 p:nth-of-type(2)              {margin:0;display:none;}
+div#DraftLocalLegend                                      input.DraftLocalLegend_rightmenu:checked  ~ p:nth-of-type(1)              {margin:0;display:none;}
+div#DraftLocalLegend                                      input.DraftLocalLegend_rightmenu:checked  ~ p:nth-of-type(2)              {margin:0;display:block;}
+
+/* ▼rightmenuの開閉に伴うオプション本体の位置変動 */
+div#DraftLocalLegend                                                                                  div.DraftLocalLegend_rightmenu{position:fixed;bottom:0;right:-50%;}
+div#DraftLocalLegend label.DraftLocalLegend_rightmenu:has(input.DraftLocalLegend_rightmenu:checked) ~ div.DraftLocalLegend_rightmenu{position:fixed;         right:  0 ;}
 
                      /*▼リスト番号表示用*/
                      ol#DraftLocalLegend_result{counter-reset:item;list-style:none;}
                      ol#DraftLocalLegend_result li > div{position:relative;cursor:pointer;}
                      ol#DraftLocalLegend_result li > div::before{counter-increment:item;content:counter(item)".";position:absolute;left:-2.5rem;font-size:1.5rem;bottom:4px;}
-div#DraftLocalLegend ol#DraftLocalLegend_result{margin:1rem;background:#eee;border:1px solid #aaa;padding:1rem;}
+
 div#DraftLocalLegend ol#DraftLocalLegend_result li{margin:6px 0 0 2.5rem;font-weight:bold;}
 div#DraftLocalLegend ol#DraftLocalLegend_result li > div > div:nth-child(1){margin-bottom:6px;font-weight:normal;word-break:break-all;} /*savedata*/
 div#DraftLocalLegend ol#DraftLocalLegend_result li > div > div:nth-child(1)::after{content:'　';} /*savedata*/
@@ -183,14 +215,6 @@ div#DraftLocalLegend div.DraftLocalLegend_Savedatalist div.savefile > div:nth-ch
 body:has(#hexereiToggle:checked)         label[data-dll-teambouns_en="hexerei"]         > span{box-shadow:0 0 4px #080,0 0 4px #080,0 0 4px #080;}
 body:has(#moonsignToggle:checked)        label[data-dll-teambouns_en="moonsign"]        > span{box-shadow:0 0 4px #008,0 0 4px #008,0 0 4px #008;}
 body:has(#stellarreactionToggle:checked) label[data-dll-teambouns_en="stellarreaction"] > span{box-shadow:0 0 4px #068,0 0 4px #068,0 0 4px #068;}
-
-@media screen and (min-width: 480px) {
-	#DraftLocalLegend .DraftLocalLegend_enemylists{width:100%;}
-	#DraftLocalLegend .DraftLocalLegend_enemylist{display:flex;border-bottom:1px solid #888;text-align:center;}
-	#DraftLocalLegend .DraftLocalLegend_enemylist > div{width:25%;}
-	#DraftLocalLegend .DraftLocalLegend_lottery{display:flex;}
-	#DraftLocalLegend .DraftLocalLegend_lottery > div{width:40%;max-width:50rem;}
-}
 
 /*▼ドラフト地方伝説　キャラ使用状況の表示*/
                td[data-dll-characterelement]           label                      > span > span{display:none;}
@@ -242,9 +266,9 @@ body:has(#stellarreactionToggle:checked) label[data-dll-teambouns_en="stellarrea
 /*        水  氷*/label input.frozen:checked              ~ span{background:linear-gradient(160deg,var(--hydro-light)   49%,var(--cryo-light)    51%);}
 /*          炎氷*/label input.melt:checked                ~ span{background:linear-gradient(160deg,var(--pyro-light)    49%,var(--cryo-light)    51%);}
 
-#DraftLocalLegend .DraftLocalLegend_CharacterRechargeCounter td{height:1.5rem;}
-#DraftLocalLegend .DraftLocalLegend_CharacterRechargeCounter td input{width:1.5rem;}
-#DraftLocalLegend .DraftLocalLegend_CharacterRechargeCounter td span{display:inline-block;width:3rem;}
+/* ▼オプションの開閉に伴うheaderの位置変動 */
+div#DraftLocalLegend                                                                                                  div#DraftLocalLegend_header{position:sticky;top:0 ;right:   0  ;width:     100%         ;min-width:100%;}
+div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked) ~ div#DraftLocalLegend_header{position:sticky;top:0 ;right: 500px;width:calc(100% - 500px);min-width:calc(100% - 500px + (100vw - 1014px) / 2);}
 
 /*▼▼▼完全ランダムボスバトル▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼*/
 #AllRandomBossBattle div#AllRandomBossBattle_result{background:#eee;border:1px solid #aaa;padding:1rem;}
@@ -368,90 +392,62 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 <!--######ドラフト地方伝説###########################################################################################################################################################################-->
 
 <div class="content" id="DraftLocalLegend">
-	<div class="title">ドラフト地方伝説</div>
-	<div class="rule">
-		<div>概要</div>
-		<ul>
-			<li>キャラクターの使用に制限を設けて、各地に存在する地方伝説と戦うゲームです
-		</ul>
-		<div>遊び方</div>
-		<ol>
-			<li>本プログラムを起動して、戦う地方伝説を選択する
-			<li>決定ボタンを押して、表示された順番通りに戦う
-			<li>戦闘前に、その戦闘で使用するキャラクターを1体決める
-			<li>一度使ったことのあるキャラクターは再び使用することができない
-			<li>戦闘中にHPが0になった場合は、別キャラクターで戦闘に参加するか、その戦闘が終わるまで待機すること
-			<li>使用したキャラクターは下部にあるリストのチェックを外す(クリック/タップで色が外れる)
-		</ol>
-		<div>基本レギュレーション案について</div>
-		<ol>
-			<li>星4は戦闘不能にならない限り何度でも使用可 / 地方伝説6体毎に使用済(生存)キャラの全復活
-			<li>星4は戦闘不能にならない限り何度でも使用可 / (星5+星4+星4)×4プレイヤー+4キャラランダム復活を初期キャラとして、各戦闘後に復活コスト8
-			<li>各戦闘後に復活コスト5
-		</ol>
-		<div>レギュレーションの改変案について</div>
-		<ul>
-			<li>他プレイヤーと重複した際は、オプション項目にあるキャラクター重複回避用抽選機を使用する
-			<li>星5限定完凸キャラクターを使用する場合は、オプション項目にあるコスト抽選機を使用する
-			<li>星4キャラクターは戦闘不能にならない限り何度でも使える
-			<li>中盤で使用済(生存)キャラの復活をさせる
-			<li>その他、プレイヤーの練度や手持ち状況に併せて適宜改変する
-		</ul>
+
+	<!--▼ヘッダー-->
+	<div id="DraftLocalLegend_header" style="background:#eeed;border:1px #aaa;border-style:none none solid;box-sizing:border-box;text-align:center;">
+		残り時間：<div id="DraftLocalLegend_ReadyThinkingTimer" style="font-size:1rem;font-weight:bold;display:inline-block;"></div>
+		 / 
+		キャラクター決定：
+		<label><input type="checkbox" data-dll-opt-status="11" data-css="none"><span>1P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="12" data-css="none"><span>2P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="13" data-css="none"><span>3P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="14" data-css="none"><span>4P</span></label>
+		 / 
+		戦闘準備完了：
+		<label><input type="checkbox" data-dll-opt-status="21" data-css="none"><span>1P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="22" data-css="none"><span>2P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="23" data-css="none"><span>3P</span></label>
+		<label><input type="checkbox" data-dll-opt-status="24" data-css="none"><span>4P</span></label>
 	</div>
-
-	<div id="DraftLocalLegend_root"></div>
-	<div style="text-align:center;background:#eee;border:1px #aaa;border-style:none solid solid solid;padding:0.5rem;">
-		抽選数：<input type="number" id="DraftLocalLegend_enemycount" style="width:60px;" value="99" step="1"><br>
-		<label><input type="checkbox" id="DraftLocalLegend_createmaskedlist" data-css="none"><span>残りの地方伝説を表示する(リアルタイム反映)</span></label><br>
-		<br>
-		※指定した地方伝説の数を超過する値を入力した場合、超過した分は無視されすべての地方伝説が抽選対象に含まれます
+	<!--▲ヘッダー-->
+	<!--▼左側-->
+	<label class="DraftLocalLegend_leftmenu"><input type="checkbox" class="DraftLocalLegend_leftmenu"><p>地方伝説抽選リストを表示する</p><p>地方伝説抽選リストを閉じる</p></label>
+	<div class="DraftLocalLegend_leftmenu" style="padding:2rem 0.5rem 0.5rem;width:50%;max-width:500px;overflow-y:scroll;background:#eeed;border:1px solid #aaa;box-sizing:border-box;">
+		<!--▼地方伝説の抽選設定-->
+		<details><summary>地方伝説の抽選設定</summary>
+			<div id="DraftLocalLegend_root" style="height:200px;overflow-y:scroll;border-bottom:1px solid #aaa;"><!--
+				<div class="DraftLocalLegend_enemylist">
+					<div class="background-Mondstadt"></div>
+					<div class="background-Liyue"></div>
+				</div>
+			--></div>
+			<!--▼抽選数とか決めたり抽選ボタンがあったり-->
+			<div style="text-align:center;padding:0.5rem;background:#eee;">
+				抽選数：<input type="number" id="DraftLocalLegend_enemycount" style="width:40px;" value="99" step="1">
+				<label><input type="checkbox" id="DraftLocalLegend_createmaskedlist" data-css="none"><span>残りの地方伝説を表示する</span></label><br>
+				<input type="button" value="抽選" id="DraftLocalLegend_lottery" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
+			</div>
+		</details>
+		<!--▼地方伝説の抽選結果-->
+		<details><summary>地方伝説の抽選結果</summary>
+			<ol id="DraftLocalLegend_result" style="max-height:300px;overflow-y:scroll;background:#eee;padding:0.5rem;"></ol>
+		</details>
+		<!--▼残りの地方伝説一覧-->
+		<details open><summary>残りの地方伝説一覧<button class="help-button" data-help-id="help7">？</button></summary>
+			<div id="help7" class="help-popup"><p>CC…Croud Control。ここでは浮かしや吸い寄せなどが有効な敵のことを指す</p></div>
+			<div id="DraftLocalLegend_MaskedList" style="background:#eee;padding:0.5rem;"></div>
+		</details>
 	</div>
-
-	<div style="text-align:center;">
-		<input type="button" value="決定" id="DraftLocalLegend_lottery" style="width:80px;margin:1rem;padding:1rem;font-weight:bold;">
-	</div>
-	<ol id="DraftLocalLegend_result" style="max-height:300px;overflow-y:scroll;"></ol>
-
-	<div style="text-align:center;font-size:1.5rem;padding:0.5rem;margin:auto 1rem;background:#444;color:#fff;">残りの地方伝説一覧
-		<button class="help-button" data-help-id="help7">？</button>
-		<div id="help7" class="help-popup">
-			<p>CC…Croud Control。ここでは浮かしや吸い寄せなどが有効な敵のことを指す</p>
-		</div>
-	</div>
-	<div id="DraftLocalLegend_MaskedList" style="background:#eee;border:1px solid #aaa;margin:0 1rem 1rem;padding:1rem;"></div>
-
-	<hr style="margin:5rem auto;">
-
-<!--######ここからオプション######-->
-
-	<label class="DraftLocalLegend_optionToggleLabel"><input type="checkbox" class="DraftLocalLegend_optionToggleInput"><p>オプションを表示する</p><p>オプションを閉じる</p></label>
-
-	<div class="DraftLocalLegend_readyThinking" style="background:#eeed;border:1px #aaa;border-style:none none solid;box-sizing:border-box;">
-		<div style="text-align:center;">
-				残り時間：<div id="DraftLocalLegend_ReadyThinkingTimer" style="font-size:1rem;font-weight:bold;display:inline-block;"></div>
-				 / 
-				キャラクター決定：
-				<label><input type="checkbox" data-dll-opt-status="11" data-css="none"><span>1P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="12" data-css="none"><span>2P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="13" data-css="none"><span>3P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="14" data-css="none"><span>4P</span></label>
-				 / 
-				戦闘準備完了：
-				<label><input type="checkbox" data-dll-opt-status="21" data-css="none"><span>1P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="22" data-css="none"><span>2P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="23" data-css="none"><span>3P</span></label>
-				<label><input type="checkbox" data-dll-opt-status="24" data-css="none"><span>4P</span></label>
-		</div>
-	</div>
-
-	<div class="DraftLocalLegend_option" style="padding:2rem 0.5rem 0.5rem;width:500px;height:100%;overflow-y:scroll;background:#eeed;border:1px solid #aaa;box-sizing:border-box;">
-
+	<!--▲左側-->
+	<!--▼右側-->
+	<label class="DraftLocalLegend_rightmenu"><input type="checkbox" class="DraftLocalLegend_rightmenu"><p>オプションを表示する</p><p>オプションを閉じる</p></label>
+	<div class="DraftLocalLegend_rightmenu" style="padding:2rem 0.5rem 0.5rem;width:50%;max-width:500px;overflow-y:scroll;background:#eeed;border:1px solid #aaa;box-sizing:border-box;">
 		<details open><summary>キャラクター重複回避用抽選機<button class="help-button" data-help-id="help5">？</button></summary>
 			<div id="help5" class="help-popup">
 				<p>使用するキャラクターが重複した場合は、本抽選機を使用してください。<br>なお、同じ抽選結果を繰り返し利用することを避けるため、30秒経過で自動的に抽選結果を非表示にしています。</p>
 			</div>
 			<div style="display:flex;">
-				<input type="button" value="抽選" id="DraftLocalLegend_CharacterChange" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" value="抽選" id="DraftLocalLegend_CharacterChange" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_CharacterChangeResult" style="margin-right:0.5rem;"></div>
 			</div>
 		</details>
@@ -495,7 +491,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 					<label><input type="checkbox" data-dll-opt-element="D" data-dll-opt-elementnumber="47" data-css="Cryo_light"   ><span>氷</span></label>
 			</table>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_Element" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" id="DraftLocalLegend_Element" value="抽選" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_ElementResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
 			</div>
 		</details>
@@ -531,7 +527,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 					<label><input type="checkbox" data-dll-opt-weapon="D" data-dll-opt-weaponnumber="45" data-css="none_light"><span>弓</span></label>
 			</table>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_Weapon" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" id="DraftLocalLegend_Weapon" value="抽選" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_WeaponResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
 			</div>
 		</details>
@@ -577,7 +573,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 				    <td><label><input type="checkbox" data-dll-opt-reaction="melt"                class="melt"               ><span style="width:calc(100% - 16px);text-wrap:wrap;">溶解    </span></label>
 			</table>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_ElementalReaction" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" id="DraftLocalLegend_ElementalReaction" value="抽選" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_ElementalReactionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
 			</div>
 		</details>
@@ -626,7 +622,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 					<label><input type="checkbox" data-dll-opt-region="D" data-dll-opt-regionnumber="49" data-css="none_light"     ><span>外の世界</span></label>
 			</table>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_Region" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" id="DraftLocalLegend_Region" value="抽選" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_RegionResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
 			</div>
 		</details>
@@ -637,7 +633,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 				<input type="number" id="DraftLocalLegend_BirthDDice" style="width:40px;" value="5"> d31
 			</div>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_Birth" value="抽選" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+				<input type="button" id="DraftLocalLegend_Birth" value="抽選" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				<div id="DraftLocalLegend_BirthResult" style="white-space:pre-wrap;margin:0.5rem 0.5rem 0.5rem 0;"></div>
 			</div>
 		</details>
@@ -657,14 +653,14 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 					星5即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR5">
 					 / 
 					星4即復活<input type="checkbox" id="DraftLocalLegend_CharacterRechargeNormalR4"><br>
-					<input type="button" value="抽選" id="DraftLocalLegend_CharacterRechargeNormal" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
+					<input type="button" value="抽選" id="DraftLocalLegend_CharacterRechargeNormal" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
 				</div>
 				<div id="DraftLocalLegend_CharacterRechargeResultNormal"></div>
 			</div>
 		</details>
 
 		<details><summary>タイマー</summary>
-			<input type="button" id="DraftLocalLegend_TimerToggle" style="width:160px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;" value="リセット・スタート">
+			<input type="button" id="DraftLocalLegend_TimerToggle" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;" value="リセット・スタート">
 			<span id="DraftLocalLegend_Timer" style="margin:1rem;font-weight:bold;"></span>
 			<div style="margin:0 1rem;">▼メモ(記載した内容はページを閉じても保存されます)</div>
 			<textarea id="DraftLocalLegend_TimerMemo" style="width:calc(100% - 2rem);height:10rem;margin:0.5rem 1rem 1rem;box-sizing:border-box;"></textarea>
@@ -691,13 +687,13 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 				</div>
 			</div>
 			<div style="display:flex;">
-				<input type="button" id="DraftLocalLegend_SaveDataCreate" value="作成" style="width:80px;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-				<input type="text" id="DraftLocalLegend_SaveDataCreateResult" readonly style="width:calc(100% - 80px - 3rem);margin:0.75rem 1rem 1rem 0;">
+				<input type="button" id="DraftLocalLegend_SaveDataCreate" value="作成" style="margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_SaveDataCreateResult" readonly style="margin:0.5rem 0.5rem 0.5rem 0;height:2rem;width:100%;">
 			</div>
 		</details>
 
 		<details><summary>カスタムキャラクターリスト用コード生成機</summary>
-			<table border="1" style="margin:0.5rem 1rem 0;">
+			<table border="1" style="margin:0.5rem 0.5rem 0;">
 				<tr><td class="background-Mondstadt"><div class="characterlist_anemo   customcharacterlist"></div>
 				<tr><td class="background-Liyue"    ><div class="characterlist_geo     customcharacterlist"></div>
 				<tr><td class="background-Inazuma"  ><div class="characterlist_electro customcharacterlist"></div>
@@ -707,18 +703,18 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 				<tr><td class="background-Snezhnaya"><div class="characterlist_cryo    customcharacterlist"></div>
 				<tr><td class="background-none"     ><div class="characterlist_none    customcharacterlist"></div>
 			</table>
-			<div style="padding:1rem 0;">
-				<input type="button" id="DraftLocalLegend_InBtCharacterpick" value="インポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-				<input type="text" id="DraftLocalLegend_InTeCharacterpick" style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 0 1rem;">
-				<input type="button" id="DraftLocalLegend_ExBtCharacterpick" value="エクスポート" style="width:8rem;padding:1rem;margin:0.75rem 1rem 1rem;font-weight:bold;">
-				<input type="text" id="DraftLocalLegend_ExTeCharacterpick" readonly style="width:calc(100% - 12rem);padding:1rem 0;margin:0.75rem 0 1rem;">
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_InBtCharacterpick" value="インポート" style="width:6rem;margin:0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_InTeCharacterpick" style="height:2rem;margin:0.5rem 0.5rem 0.5rem 0;width:calc(100% - 6rem);">
+			</div>
+			<div style="display:flex;">
+				<input type="button" id="DraftLocalLegend_ExBtCharacterpick" value="エクスポート" style="width:6rem;margin:0 0.5rem 0.5rem;padding:0.25rem 0.5rem;font-weight:bold;">
+				<input type="text" id="DraftLocalLegend_ExTeCharacterpick" readonly style="height:2rem;margin:0 0.5rem 0.5rem 0;width:calc(100% - 6rem);">
 			</div>
 		</details>
-
 	</div>
-
-<!--######ここまでオプション######-->
-
+	<!--▲右側-->
+	<!--▼中央-->
 	<table border="1" id="DraftLocalLegend_characterlist_list" style="width:100%;">
 		<colgroup>
 			<col>
@@ -726,7 +722,7 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 			<col style="border-right:double 4px #888">
 			<col>
 		</colgroup>
-		<tr><th colspan="4" style="text-align:center;font-size:1.5rem;padding:0.5rem;background:#444;color:#fff;">キャラクターリスト(すべて五十音順)
+		<tr><th colspan="4" style="text-align:center;font-size:1.5rem;padding:0.5rem;background:#444;color:#fff;">キャラクターリスト
 		<tr><td colspan="4" style="text-align:center;">
 			<label><input type="checkbox" id="DetailToggle"          data-css="none"><span>元素付着情報の表示</span></label>
 		<tr><td colspan="4" style="text-align:center;">
@@ -872,42 +868,17 @@ div.template .remaining_enemies div{display:inline-block;border-left:3px solid #
 			    <label><input type="button" id="DraftLocalLegend_ResetStatuses2"><span>リセット(全キャラ戦闘不能)</span></label>
 	</table>
 
-	<div style="background:#eee;border:1px #888 solid;margin:1rem 0;padding:1rem;">
+	<div style="background:#eee;border:1px #888 solid;margin:1rem 0;padding:0.25rem;">
 		<div style="display:flex;">
-			<button id="DraftLocalLegend_importStatus" style="padding:1rem;margin:1rem;width:20rem;">セーブデータをインポート</button>
-			<input type="text" id="DraftLocalLegend_importText" style="width:calc(100% - 20rem);height:auto;margin:1rem;" autocomplete="off">
+			<button id="DraftLocalLegend_importStatus" style="padding:0.25rem 0.5rem;margin:0.25rem;width:12rem;">セーブデータをインポート</button>
+			<input type="text" id="DraftLocalLegend_importText" style="width:calc(100% - 12rem);height:auto;margin:0.25rem;" autocomplete="off">
 		</div>
 		<div style="display:flex;">
-			<button id="DraftLocalLegend_exportStatus" style="padding:1rem;margin:1rem;width:20rem;">セーブデータをエクスポート</button>
-			<input type="text" id="DraftLocalLegend_exportText" style="width:calc(100% - 20rem);height:auto;margin:1rem;" autocomplete="off" readonly>
+			<button id="DraftLocalLegend_exportStatus" style="padding:0.25rem 0.5rem;margin:0.25rem;width:12rem;">セーブデータをエクスポート</button>
+			<input type="text" id="DraftLocalLegend_exportText" style="width:calc(100% - 12rem);height:auto;margin:0.25rem;" autocomplete="off" readonly>
 		</div>
 	</div>
-
-
-<style type="text/css">
-/* ▼オプションのdetails/summary/help-button */
-div#DraftLocalLegend div.DraftLocalLegend_option details{background:transparent;position:relative;border:1px solid #888;margin:1rem 0;}
-div#DraftLocalLegend div.DraftLocalLegend_option summary{background:#444;color:#fff;padding-right:2rem;}
-div#DraftLocalLegend div.DraftLocalLegend_option button.help-button{position:absolute;top:0.25rem;right:0.25rem;}
-
-/* ▼オプションの開閉に伴う開閉ボタンの位置変動と表示内容変更 */
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                                                           {position:fixed;top:5%    ;right:0     ;background:#eeed;border:1px #aaa;border-style:solid none solid solid;padding:0.5rem;letter-spacing:20%;writing-mode:vertical-rl  ;z-index:999;}
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked)                                     {position:fixed;top:0.5rem;right:1.5rem;background:#eeed;border:1px #aaa;border-style:solid                 ;padding:0.5rem;letter-spacing: 0 ;writing-mode:horizontal-tb;z-index:999;}
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                         p:nth-of-type(1)                  {margin:0;display:block;}
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel                                                         p:nth-of-type(2)                  {margin:0;display:none;}
-div#DraftLocalLegend                                              input.DraftLocalLegend_optionToggleInput:checked  ~ p:nth-of-type(1)                  {margin:0;display:none;}
-div#DraftLocalLegend                                              input.DraftLocalLegend_optionToggleInput:checked  ~ p:nth-of-type(2)                  {margin:0;display:block;}
-
-/* ▼オプションの開閉に伴うreadyThinkingの位置変動 */
-div#DraftLocalLegend                                                                                                  div.DraftLocalLegend_readyThinking{position:sticky;top:0 ;right:   0  ;width:     100%         ;min-width:100%;}
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked) ~ div.DraftLocalLegend_readyThinking{position:sticky;top:0 ;right: 500px;width:calc(100% - 500px);min-width:calc(100% - 500px + (100vw - 1014px) / 2);}
-
-/* ▼オプションの開閉に伴うオプション本体の位置変動 */
-div#DraftLocalLegend                                                                                                  div.DraftLocalLegend_option       {position:fixed ;top:0 ;right:-500px;}
-div#DraftLocalLegend label.DraftLocalLegend_optionToggleLabel:has(input.DraftLocalLegend_optionToggleInput:checked) ~ div.DraftLocalLegend_option       {position:fixed ;       right:   0  ;}
-</style>
-
-
+	<!--▲中央-->
 </div>
 
 <!--######完全ランダムボスバトル#####################################################################################################################################################################-->
@@ -2160,13 +2131,6 @@ function DraftLocalLegend_renderRoot(DLL_customplaylist) {
   if (!root) return;
   root.innerHTML = "";
 
-  // ▼PC用ヘッダーを生成する
-  const createPC = () => {
-    const div = document.createElement("div");
-    div.className = "DraftLocalLegend_enemylist pc";
-    return div;
-  };
-
   // ▼Firebase対策
   const rows = Array.isArray(DLL_customplaylist)
     ? DLL_customplaylist
@@ -2194,9 +2158,6 @@ function DraftLocalLegend_renderRoot(DLL_customplaylist) {
 
     regionMap.get(row.region_en).push(row);
   }
-
-  // ▼PCヘッダーを追加
-  root.append(createPC());
 
   // ▼一覧本体
   const enemyList = document.createElement("div");
@@ -2242,6 +2203,65 @@ function DraftLocalLegend_renderRoot(DLL_customplaylist) {
 }
 
 // #######customplaylistをもとにDraftLocalLegend_rootをつくる##################################################################################################################################################
+// #####################################################################################################################################################################################################
+// #######DraftLocalLegend_左右メニューの高さ調整#######################################################################################################################################################
+
+function DraftLocalLegend_adjustHeight() {
+  const header = document.getElementById('DraftLocalLegend_header');
+  if (!header) return;
+
+  requestAnimationFrame(() => {
+    const headerHeight = header.getBoundingClientRect().height;
+    const height = `calc(100vh - ${headerHeight}px)`;
+    const top = `calc(${headerHeight}px + 0.75rem)`;
+
+    const leftMenu = document.querySelector('div.DraftLocalLegend_leftmenu');
+    const rightMenu = document.querySelector('div.DraftLocalLegend_rightmenu');
+
+    if (leftMenu) {leftMenu.style.setProperty('height', height, 'important');}
+    if (rightMenu) {rightMenu.style.setProperty('height', height, 'important');}
+
+    const labels = [
+      {
+        selector: 'div#DraftLocalLegend label.DraftLocalLegend_leftmenu',
+        inputSelector: 'input.DraftLocalLegend_leftmenu'
+      },
+      {
+        selector: 'div#DraftLocalLegend label.DraftLocalLegend_rightmenu',
+        inputSelector: 'input.DraftLocalLegend_rightmenu'
+      }
+    ];
+
+    labels.forEach(({ selector, inputSelector }) => {
+      document.querySelectorAll(selector).forEach(label => {
+        const input = label.querySelector(inputSelector);
+
+        if (input?.checked) {
+          label.style.setProperty('top', top, 'important');
+        } else {
+          label.style.removeProperty('top');
+        }
+      });
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', DraftLocalLegend_adjustHeight);
+window.addEventListener('load', DraftLocalLegend_adjustHeight);
+window.addEventListener('resize', DraftLocalLegend_adjustHeight);
+
+// チェック状態の変更時にも再計算
+document.addEventListener('change', event => {
+  if (
+    event.target.matches(
+      'input.DraftLocalLegend_leftmenu, input.DraftLocalLegend_rightmenu'
+    )
+  ) {
+    DraftLocalLegend_adjustHeight();
+  }
+});
+
+// #######DraftLocalLegend_左右メニューの高さ調整#######################################################################################################################################################
 // #####################################################################################################################################################################################################
 // #######DraftLocalLegend_地方伝説リスト出力###########################################################################################################################################################
 
@@ -3508,10 +3528,10 @@ const reverseElementMap = Object.fromEntries(
 // ▼表示関数を共通化
 function renderResults(results) {
   if (!results || results.length === 0) {
-    elementResultDiv.innerHTML = `<p style="margin-top:1.5rem;">元素を選択してください。</p>`;
+    elementResultDiv.innerHTML = `<p style="margin-top:1rem;">元素を選択してください。</p>`;
   } else {
     elementResultDiv.innerHTML =
-      `<p style="margin-top:1.5rem;">${results.join(' / ')}</p>`;
+      `<p style="margin-top:1rem;">${results.join(' / ')}</p>`;
   }
 }
 
@@ -3595,10 +3615,10 @@ const reverseWeaponMap = Object.fromEntries(
 function renderWeaponResults(results) {
   if (!results || results.length === 0) {
     weaponResultDiv.innerHTML =
-      `<p style="margin-top:1.5rem;">武器種を選択してください。</p>`;
+      `<p style="margin-top:1rem;">武器種を選択してください。</p>`;
   } else {
     weaponResultDiv.innerHTML =
-      `<p style="margin-top:1.5rem;">${results.join(' / ')}</p>`;
+      `<p style="margin-top:1rem;">${results.join(' / ')}</p>`;
   }
 }
 
@@ -3695,9 +3715,9 @@ reactionButton.addEventListener("click", () => {
 
   let htmlString;
   if (displayTexts.length === 0) {
-    htmlString = `<p style="margin-top:1.5rem;">元素反応を選択してください。</p>`;
+    htmlString = `<p style="margin-top:1rem;">元素反応を選択してください。</p>`;
   } else {
-    htmlString = `<p style="margin-top:1.5rem;">${displayTexts.join(' / ')}</p>`;
+    htmlString = `<p style="margin-top:1rem;">${displayTexts.join(' / ')}</p>`;
   }
 
   // ▼DOM反映
@@ -3743,10 +3763,10 @@ onValue(ref(database, 'DraftLocalLegend/option/elementalreaction/result'), snaps
 
     if (displayResults.length === 0) {
       reactionResultDiv.innerHTML =
-        `<p style="margin-top:1.5rem;">元素反応を選択してください。</p>`;
+        `<p style="margin-top:1rem;">元素反応を選択してください。</p>`;
     } else {
       reactionResultDiv.innerHTML =
-        `<p style="margin-top:1.5rem;">${displayResults.join(' / ')}</p>`;
+        `<p style="margin-top:1rem;">${displayResults.join(' / ')}</p>`;
     }
   }
 });
@@ -3781,10 +3801,10 @@ const reverseRegionMap = Object.fromEntries(
 function renderRegionResults(results) {
   if (!results || results.length === 0) {
     regionResultDiv.innerHTML =
-      `<p style="margin-top:1.5rem;">国を選択してください。</p>`;
+      `<p style="margin-top:1rem;">国を選択してください。</p>`;
   } else {
     regionResultDiv.innerHTML =
-      `<p style="margin-top:1.5rem;">${results.join(' / ')}</p>`;
+      `<p style="margin-top:1rem;">${results.join(' / ')}</p>`;
   }
 }
 
@@ -5356,6 +5376,12 @@ try {
 
 <div style="margin:3rem auto;padding:2rem;width:800px;max-width:80%;max-height:400px;overflow-y:scroll;border:1px solid #888;" class="updatehistory">
 	<div style="text-align:center;font-size:1.5rem;font-weight:bold;margin:1rem;">更新履歴</div>
+
+	<div class="version">v2.7.0<span>2026/10/09</span></div>
+	<div class="details">
+		<p>【ドラフト地方伝説】地方伝説抽選リスト全体を画面左側に格納しました</p>
+		<p>その他、軽微な変更・修正をしました</p>
+	</div>
 
 	<div class="version">v2.6.0<span>2026/10/09</span></div>
 	<div class="details">
